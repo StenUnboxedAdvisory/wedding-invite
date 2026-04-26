@@ -1,11 +1,7 @@
 /* =========================
    Sten & Chrissy - Wedding Invite
-   Light / Summery / Floral
+   Light / Summery / Floral (NO REPEAT FIX)
    ========================= */
-
-/* Optional: if you added Google Fonts in HTML head:
-   https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap
-*/
 
 :root{
   --bg:#fffaf3;             /* warm cream */
@@ -18,8 +14,7 @@
   --gold:#facc15;           /* sunny */
   --gold2:#fde68a;          /* soft sunny */
   --green:#65a30d;          /* fresh green */
-  --green2:#dcfce7;         /* soft mint */
-  --pink:#fda4af;           /* pastel pink (accent) */
+  --mint:rgba(101,163,13,.18);
 
   --radius:18px;
   --shadow:0 12px 30px rgba(0,0,0,.08);
@@ -38,28 +33,38 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Floral + summery background
-     Put your generated image here: assets/floral.png
-     If your file is named differently, change it below.
-  */
-  background:
-    url("assets/floral.png") center top / 900px auto no-repeat,
+  /* ✅ IMPORTANT: define repeat/size/position PER LAYER to prevent tiling */
+  background-image:
+    url("assets/floral.png"),
     radial-gradient(650px 340px at 10% -12%, rgba(250,204,21,.35) 0%, transparent 60%),
-    radial-gradient(560px 320px at 90% 8%, rgba(101,163,13,.18) 0%, transparent 58%),
+    radial-gradient(560px 320px at 90% 8%, var(--mint) 0%, transparent 58%),
     linear-gradient(180deg, var(--bg), var(--bg2));
-}
 
-/* Optional: if you want also a subtle floral at the bottom,
-   uncomment this and add assets/floral-bottom.png:
-body{
-  background:
-    url("assets/floral.png") center top / 900px auto no-repeat,
-    url("assets/floral-bottom.png") center bottom / 900px auto no-repeat,
-    radial-gradient(650px 340px at 10% -12%, rgba(250,204,21,.35) 0%, transparent 60%),
-    radial-gradient(560px 320px at 90% 8%, rgba(101,163,13,.18) 0%, transparent 58%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+  /* Floral layer scales nicely on mobile; gradients + base fill the page */
+  background-size:
+    min(920px, 120vw) auto,
+    650px 340px,
+    560px 320px,
+    cover;
+
+  background-position:
+    center top,
+    10% -12%,
+    90% 8%,
+    center;
+
+  background-attachment:
+    scroll,
+    scroll,
+    scroll,
+    scroll;
 }
-*/
 
 .container{
   max-width: var(--maxw);
@@ -76,16 +81,25 @@ body{
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
 
-  /* If you have a cover photo, keep it:
-     Put your cover image here: assets/cover.jpg
-     If you don't have it, the gradient will still look fine.
-  */
-  background:
+  /* Cover is optional. If you don't have assets/cover.jpg, remove that layer. */
+  background-image:
     linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.92)),
-    url("assets/cover.jpg") center/cover no-repeat;
+    url("assets/cover.jpg");
+
+  background-repeat:
+    no-repeat,
+    no-repeat;
+
+  background-size:
+    cover,
+    cover;
+
+  background-position:
+    center,
+    center;
 }
 
-/* keep overlay element if it exists in HTML; we don't need it visually */
+/* Keep overlay element if it exists in HTML; not used visually */
 .hero__overlay{
   display:none;
 }
@@ -133,6 +147,8 @@ body{
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow2);
+
+  animation: fadeUp .35s ease both;
 }
 
 h2{
@@ -256,17 +272,23 @@ textarea.input{
   text-align:center;
 }
 
-/* NICE: improve small-screen spacing */
+/* MOBILE TWEAKS */
 @media (max-width: 380px){
   .hero{ height: 232px; }
   .title{ font-size: 1.9rem; }
   .grid2{ grid-template-columns: 1fr; }
+
+  /* keep floral visible but not huge on small devices */
+  body{
+    background-size:
+      min(760px, 140vw) auto,
+      650px 340px,
+      560px 320px,
+      cover;
+  }
 }
 
-/* Optional: add a subtle “card entrance” feel (no JS needed) */
-.card{
-  animation: fadeUp .35s ease both;
-}
+/* Card entrance */
 @keyframes fadeUp{
   from{ opacity:0; transform: translateY(6px); }
   to{ opacity:1; transform: translateY(0); }
