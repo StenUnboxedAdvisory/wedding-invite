@@ -1,48 +1,93 @@
+/* =========================
+   Sten & Chrissy - Wedding Invite
+   Light / Summery / Floral
+   ========================= */
+
+/* Optional: if you added Google Fonts in HTML head:
+   https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap
+*/
+
 :root{
-  --bg:#fff  --green:#65a30d;  --bg:#fffaf3;
-  --text:#1f2937;
-  --muted:#6b7280;
+  --bg:#fffaf3;             /* warm cream */
+  --bg2:#f7f7f5;            /* soft off-white */
+  --card:#ffffff;
+  --text:#1f2937;           /* slate-800 */
+  --muted:#6b7280;          /* gray-500 */
   --border:rgba(0,0,0,.08);
+
+  --gold:#facc15;           /* sunny */
+  --gold2:#fde68a;          /* soft sunny */
+  --green:#65a30d;          /* fresh green */
+  --green2:#dcfce7;         /* soft mint */
+  --pink:#fda4af;           /* pastel pink (accent) */
 
   --radius:18px;
   --shadow:0 12px 30px rgba(0,0,0,.08);
+  --shadow2:0 8px 18px rgba(0,0,0,.06);
+
+  --maxw:520px;
 }
 
-*{box-sizing:border-box}
-
+/* Reset-ish */
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
 body{
   margin:0;
-  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
   color:var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-  /* zomerse achtergrond met bloemen-gevoel */
+  /* Floral + summery background
+     Put your generated image here: assets/floral.png
+     If your file is named differently, change it below.
+  */
   background:
-    radial-gradient(600px 300px at 10% -10%, #fde68a 0%, transparent 60%),
-    radial-gradient(500px 300px at 90% 10%, #dcfce7 0%, transparent 55%),
-    linear-gradient(180deg, #fffaf3, #f7f7f5);
+    url("assets/floral.png") center top / 900px auto no-repeat,
+    radial-gradient(650px 340px at 10% -12%, rgba(250,204,21,.35) 0%, transparent 60%),
+    radial-gradient(560px 320px at 90% 8%, rgba(101,163,13,.18) 0%, transparent 58%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
 }
 
+/* Optional: if you want also a subtle floral at the bottom,
+   uncomment this and add assets/floral-bottom.png:
+body{
+  background:
+    url("assets/floral.png") center top / 900px auto no-repeat,
+    url("assets/floral-bottom.png") center bottom / 900px auto no-repeat,
+    radial-gradient(650px 340px at 10% -12%, rgba(250,204,21,.35) 0%, transparent 60%),
+    radial-gradient(560px 320px at 90% 8%, rgba(101,163,13,.18) 0%, transparent 58%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+}
+*/
+
 .container{
-  max-width:520px;
-  margin:0 auto;
-  padding:16px 16px 48px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 16px 16px 56px;
 }
 
 /* HERO */
 .hero{
   position:relative;
-  height:240px;
-  border-radius:var(--radius);
+  height: 248px;
+  border-radius: var(--radius);
   overflow:hidden;
-  border:1px solid var(--border);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  /* If you have a cover photo, keep it:
+     Put your cover image here: assets/cover.jpg
+     If you don't have it, the gradient will still look fine.
+  */
   background:
-    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.85)),
+    linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.92)),
     url("assets/cover.jpg") center/cover no-repeat;
-  box-shadow:var(--shadow);
 }
 
+/* keep overlay element if it exists in HTML; we don't need it visually */
 .hero__overlay{
-  display:none; /* niet meer nodig */
+  display:none;
 }
 
 .hero__content{
@@ -52,135 +97,177 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:20px;
+  padding: 20px;
+  gap: 6px;
 }
 
 .kicker{
-  margin:0 0 6px;
-  font-size:.9rem;
-  color:var(--green);
-  letter-spacing:.08em;
-  text-transform:uppercase;
+  margin:0;
+  font-size: .85rem;
+  color: var(--green);
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
 
 .title{
-  margin:0 0 8px;
+  margin:0;
   font-family: "Playfair Display", serif;
-  font-size:2rem;
-  font-weight:600;
+  font-weight: 600;
+  font-size: 2.05rem;
+  line-height: 1.1;
 }
 
 .subtitle{
   margin:0;
-  font-size:1rem;
-  color:var(--muted);
-  max-width:260px;
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 320px;
+  line-height: 1.35;
 }
 
 /* CARDS */
 .card{
-  margin-top:16px;
-  padding:18px;
-  background:var(--card);
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
+  margin-top: 16px;
+  padding: 18px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow2);
 }
 
 h2{
-  margin:0 0 10px;
-  font-family:"Playfair Display", serif;
-  font-size:1.25rem;
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: .2px;
 }
 
-/* TEXT */
-.muted{color:var(--muted)}
-.small{font-size:.85rem}
-.big{font-size:1.05rem;margin:0}
+/* TEXT HELPERS */
+.muted{ color: var(--muted); line-height: 1.45; }
+.small{ font-size: .86rem; }
+.big{ font-size: 1.05rem; margin: 0; }
 .label{
-  margin:12px 0 6px;
-  font-size:.85rem;
-  color:#374151;
+  margin: 12px 0 6px;
+  font-size: .85rem;
+  color: #374151;
+}
+.hidden{ display:none; }
+
+/* LAYOUT */
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
-/* FORM */
-.form{display:flex;flex-direction:column}
+.divider{
+  height: 1px;
+  margin: 14px 0;
+  background: var(--border);
+}
+
+/* FORMS */
+.form{
+  display:flex;
+  flex-direction:column;
+}
 
 .input{
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#fff;
-  font-size:.95rem;
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: .95rem;
 }
 
 .input:focus{
   outline:none;
-  border-color:var(--green);
+  border-color: rgba(101,163,13,.55);
+  box-shadow: 0 0 0 4px rgba(220,252,231,.65);
+}
+
+textarea.input{
+  resize: vertical;
+  min-height: 86px;
 }
 
 /* BUTTON */
 .btn{
-  margin-top:14px;
-  padding:14px;
-  border-radius:999px;
-  border:0;
-  background:linear-gradient(90deg, #fde68a, #facc15);
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(250,204,21,.35);
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(90deg, var(--gold2), var(--gold));
+  color: #3b2f00;
+  font-weight: 700;
+
+  box-shadow: 0 10px 22px rgba(250,204,21,.35);
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
 }
 
 .btn:hover{
-  transform:translateY(-1px);
+  transform: translateY(-1px);
+  filter: saturate(1.02);
 }
 
-/* GRID & DIVIDER */
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.divider{
-  height:1px;
-  margin:14px 0;
-  background:var(--border);
+.btn:active{
+  transform: translateY(0px);
+  box-shadow: 0 6px 16px rgba(250,204,21,.28);
 }
 
 /* COUNTDOWN */
 .countdown{
   display:flex;
-  gap:10px;
+  gap: 10px;
 }
 
 .cd{
   flex:1;
-  padding:12px;
-  border-radius:16px;
-  background:var(--accent-soft);
+  padding: 12px 10px;
+  border-radius: 16px;
+  background: rgba(254,243,199,.95); /* soft gold */
+  border: 1px solid rgba(250,204,21,.25);
   text-align:center;
 }
 
 .cd span{
   display:block;
-  font-size:1.4rem;
-  font-weight:700;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #3b2f00;
+  letter-spacing: .3px;
 }
 
 .cd small{
-  font-size:.75rem;
-  color:var(--muted);
+  display:block;
+  margin-top: 2px;
+  font-size: .75rem;
+  color: var(--muted);
 }
 
 /* FOOTER */
 .footer{
-  margin-top:24px;
+  margin-top: 22px;
   text-align:center;
 }
 
-/* UTIL */
-.hidden{display:none}
-  --card:#ffffff;
-  --accent:#eab308;        /* warm goud */
-  --accent-soft:#fef3c7;
+/* NICE: improve small-screen spacing */
+@media (max-width: 380px){
+  .hero{ height: 232px; }
+  .title{ font-size: 1.9rem; }
+  .grid2{ grid-template-columns: 1fr; }
+}
+
+/* Optional: add a subtle “card entrance” feel (no JS needed) */
+.card{
+  animation: fadeUp .35s ease both;
+}
+@keyframes fadeUp{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
+}
