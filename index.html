@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Uitnodiging</title>
-  <meta name="theme-color" content="#0f172a" />
+  <title>Sten & Chrissy — Uitnodiging</title>
+  <meta name="theme-color" content="#fffaf3" />
+
+  <!-- Optional fonts (netter trouwkaart-gevoel) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <main class="container">
     <header class="hero" role="banner" aria-label="Uitnodiging">
-      <div class="hero__overlay"></div>
       <div class="hero__content">
         <p class="kicker">Jullie zijn uitgenodigd</p>
         <h1 class="title">Sten &amp; Chrissy</h1>
-        <p class="subtitle">
-        Met heel veel liefde nodigen wij je uit om samen met ons te vieren
+        <p class="subtitle" id="heroSubtitle">
+          Met heel veel liefde nodigen wij <span id="youPronounHero">jullie</span> uit om samen met ons te vieren
         </p>
       </div>
     </header>
@@ -28,20 +33,21 @@
 
       <form id="codeForm" class="form" autocomplete="off">
         <label class="label" for="codeInput">Code</label>
-        <input id="codeInput" class="input" placeholder="Bijv. AB12CD34EF" inputmode="text" />
+        <input id="codeInput" class="input" placeholder="Bijv. 27271930" inputmode="text" />
         <button class="btn" type="submit">Verder</button>
       </form>
 
-      <p id="gateMsg" class="muted small">
-      Op <strong>21 mei 2027</strong> zeggen wij “ja” 💛
-      </p>
-
+      <p id="gateMsg" class="muted small"></p>
     </section>
 
     <!-- CONTENT -->
     <section id="content" class="hidden" aria-live="polite">
       <section class="card">
         <p class="muted small" id="helloText"></p>
+        <p class="muted small">
+          Op <strong>21 mei 2027</strong> zeggen wij “ja” 💛
+        </p>
+
         <h2>Wanneer &amp; waar</h2>
 
         <div class="grid2">
@@ -90,7 +96,9 @@
 
       <section class="card">
         <h2>RSVP</h2>
-        <p class="muted">Laat het ons weten vóór <strong id="rsvpDeadline">—</strong>.</p>
+        <p class="muted">
+          <span id="rsvpIntro">Laat het ons weten</span> vóór <strong id="rsvpDeadline">—</strong>.
+        </p>
 
         <form id="rsvpForm" class="form">
           <input type="hidden" id="inviteToken" name="token" />
@@ -98,8 +106,8 @@
           <label class="label" for="attending">Aanwezig</label>
           <select id="attending" class="input" name="attending" required>
             <option value="">Kies…</option>
-            <option value="yes">Ja, wij komen</option>
-            <option value="no">Nee, helaas</option>
+            <option id="optYes" value="yes">Ja, wij komen</option>
+            <option id="optNo" value="no">Nee, helaas</option>
           </select>
 
           <div id="peopleWrap">
@@ -125,6 +133,18 @@
           <button class="btn" type="submit">RSVP versturen</button>
           <p id="rsvpMsg" class="muted small"></p>
         </form>
+      </section>
+
+      <section class="card gift">
+        <h2>Cadeautip</h2>
+        <div class="gift__row">
+          <div class="gift__icon" aria-hidden="true">💌</div>
+          <p class="gift__text">
+            Het mooiste cadeau is dat <span id="youGift1">jullie</span> erbij <span id="youGiftVerb">zijn</span>.
+            Wil <span id="youGift2">jullie</span> toch iets geven?
+            Dan waarderen we een envelopje voor onze dromen samen.
+          </p>
+        </div>
       </section>
 
       <section id="dayOnlyMenu" class="card hidden">
