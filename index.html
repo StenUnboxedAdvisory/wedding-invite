@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Uitnodiging</title>
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="container">
+    <header class="hero" role="banner" aria-label="Uitnodiging">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="kicker">Jullie zijn uitgenodigd</p>
+        <h1 class="title">[Naam 1] &amp; [Naam 2]</h1>
+        <p class="subtitle">We gaan trouwen — en we vieren het graag met jou!</p>
+      </div>
+    </header>
+
+    <!-- GATE -->
+    <section id="gate" class="card">
+      <h2>Open de uitnodiging</h2>
+      <p class="muted">Open je persoonlijke link uit WhatsApp. Geen link? Voer je code in.</p>
+
+      <form id="codeForm" class="form" autocomplete="off">
+        <label class="label" for="codeInput">Code</label>
+        <input id="codeInput" class="input" placeholder="Bijv. AB12CD34EF" inputmode="text" />
+        <button class="btn" type="submit">Verder</button>
+      </form>
+
+      <p id="gateMsg" class="muted small"></p>
+    </section>
+
+    <!-- CONTENT -->
+    <section id="content" class="hidden" aria-live="polite">
+      <section class="card">
+        <p class="muted small" id="helloText"></p>
+        <h2>Wanneer &amp; waar</h2>
+
+        <div class="grid2">
+          <div>
+            <p class="label">Datum</p>
+            <p id="dateText" class="big">—</p>
+          </div>
+          <div>
+            <p class="label">Locatie</p>
+            <p id="locationText" class="big">—</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="grid2">
+          <div>
+            <p class="label">Starttijd (jouw uitnodiging)</p>
+            <p id="startTimeText" class="big">—</p>
+          </div>
+          <div>
+            <p class="label">Type gast</p>
+            <p id="guestTypeText" class="big">—</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <p id="scheduleText" class="muted">—</p>
+      </section>
+
+      <section class="card">
+        <h2>Countdown</h2>
+        <div id="countdown" class="countdown">
+          <div class="cd"><span id="d">—</span><small>dagen</small></div>
+          <div class="cd"><span id="h">—</span><small>uur</small></div>
+          <div class="cd"><span id="m">—</span><small>min</small></div>
+          <div class="cd"><span id="s">—</span><small>sec</small></div>
+        </div>
+        <p class="muted small">Tot 21 mei 2027 🥂</p>
+      </section>
+
+      <section class="card">
+        <h2>Dresscode</h2>
+        <p id="dresscodeText" class="big">—</p>
+      </section>
+
+      <section class="card">
+        <h2>RSVP</h2>
+        <p class="muted">Laat het ons weten vóór <strong id="rsvpDeadline">—</strong>.</p>
+
+        <form id="rsvpForm" class="form">
+          <input type="hidden" id="inviteToken" name="token" />
+
+          <label class="label" for="attending">Aanwezig</label>
+          <select id="attending" class="input" name="attending" required>
+            <option value="">Kies…</option>
+            <option value="yes">Ja, wij komen</option>
+            <option value="no">Nee, helaas</option>
+          </select>
+
+          <div id="peopleWrap">
+            <label class="label" for="people">Met hoeveel personen?</label>
+            <input id="people" class="input" type="number" min="1" max="10" value="1" name="people" />
+            <p id="peopleHint" class="muted small"></p>
+          </div>
+
+          <div id="overnightWrap" class="hidden">
+            <label class="label" for="overnight">Overnachting (daggasten)</label>
+            <select id="overnight" class="input" name="overnight">
+              <option value="">Kies…</option>
+              <option value="no">Nee</option>
+              <option value="yes">Ja, graag</option>
+            </select>
+            <p id="overnightHint" class="muted small"></p>
+          </div>
+
+          <label class="label" for="notes">Opmerkingen</label>
+          <textarea id="notes" class="input" name="notes" rows="3"
+            placeholder="Allergieën, vragen, opmerkingen…"></textarea>
+
+          <button class="btn" type="submit">RSVP versturen</button>
+          <p id="rsvpMsg" class="muted small"></p>
+        </form>
+      </section>
+
+      <section id="dayOnlyMenu" class="card hidden">
+        <h2>Menu (daggasten)</h2>
+        <p id="menuText" class="muted">—</p>
+      </section>
+
+      <footer class="footer">
+        <p class="muted small">Vragen? App ons gerust 💬</p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="invites.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
