@@ -209,7 +209,7 @@ rsvpForm.addEventListener("submit", async (e) => {
   console.log("RSVP payload:", payload);
 
   await new Promise(r => setTimeout(r, 500));
-  rsvpMsg.textContent = "Dankjewel! Je RSVP is ontvangen ✅";
+  rsvpMsg.textContent = "Dankjewel! We kijken ernaar uit om samen te vieren 💛";
 
   rsvpForm.querySelector("button[type=submit]").disabled = true;
 });
