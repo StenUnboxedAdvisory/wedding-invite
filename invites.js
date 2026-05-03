@@ -1,5 +1,5 @@
 window.INVITES = {
-  "27271931": { type: "day", maxPeople: 2, lable: "Martijn, Jante" },  
+  "27271931": { type: "day", maxPeople: 2, label: "Martijn, Jante" },  
   "27271930": { type: "day", maxPeople: 2, label: "Sten, Chrissy" },
   "34353611": { type: "day", maxPeople: 2, label: "Peter, Coco" },
   "35131326": { type: "day", maxPeople: 1, label: "Luuk" },
