@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
     locationText: "Landgoed Rhederoord, De Steeg",
     mapsQuery: "Landgoed Rhederoord, De Steeg",
     rsvpDeadlineText: "31 december 2026",
+    copyAddressText: "Parkweg 19, 6994 CM De Steeg",
 
     // tijden die je wil tonen in pill
     dayStart: "13:00",
