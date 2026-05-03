@@ -257,36 +257,42 @@ textarea.input{ resize: vertical; min-height: 90px; }
 .cd small{ display:block; margin-top:2px; font-size:.75rem; color:var(--muted); }
 
 /* Media card (location) */
-.mediaCard{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
+/* Locatie-afbeelding: fixed frame hoogte (zoals placeholder), responsive */
 .mediaCard__imgWrap{
-  border-radius: 18px;
-  overflow:hidden;
-  border: 1px solid rgba(17,24,39,.10);
-  background: rgba(17,24,39,.04);
   position: relative;
-  min-height: 140px;
+  overflow: hidden;
+  border-radius: 18px;
+
+  /* placeholder-achtige hoogte, responsive */
+  height: clamp(160px, 28vw, 240px);
 }
+
+/* Afbeelding vult het frame, netjes gecropt */
 .mediaCard__img{
-  width:100%;
-  height: 220px;
-  object-fit: cover;
-  display:block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* vult frame, crop waar nodig */
+  object-position: center;  /* focus midden */
+  display: block;
 }
+
+/* Fallback overlay vult exact hetzelfde frame */
 .mediaCard__imgFallback{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position: absolute;
+  inset: 0;
+  display: flex;            /* wordt door inline style op none gezet tot error */
+  align-items: center;
+  justify-content: center;
   padding: 12px;
-  text-align:center;
-  color: var(--muted);
-  font-size:.9rem;
+  text-align: center;
   background: rgba(255,255,255,.65);
+}
+
+/* Iets groter op grotere schermen */
+@media (min-width: 640px){
+  .mediaCard__imgWrap{
+    height: clamp(220px, 22vw, 320px);
+  }
 }
 .mediaCard__body p{ margin:0 0 6px; }
 
@@ -341,49 +347,71 @@ textarea.input{ resize: vertical; min-height: 90px; }
 .gift__text{ margin:0; color: var(--muted); line-height:1.55; }
 
 /* End photo */
-.endCard{ text-align:center; }
+/* =========================
+ Afmeting: 594 x 820 (portrait)   US PHOTO (portrait) — responsive
+   ========================= */
+
+/* Het frame: bepaalt de vorm (portrait) en responsive breedte */
 .endCard__imgWrap{
-  border-radius: 18px;
-  overflow:hidden;
-  border: 1px solid rgba(17,24,39,.10);
-  background: rgba(17,24,39,.04);
   position: relative;
-  min-height: 180px;
-  margin-bottom: 14px;
+  overflow: hidden;
+  border-radius: 18px;
+
+  /* Houd exact dezelfde verhouding als de foto */
+  aspect-ratio: 594 / 820;
+
+  /* Responsive breedte: vult de card, maar met max */
+  width: 100%;
+  max-width: 420px;
+
+  /* Centreer in de card */
+  margin: 0 auto 14px;
+
+  /* Optioneel: subtiele achtergrond/outline */
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(17,24,39,.10);
 }
+
+/* De foto zelf: niet vervormen, volledig zichtbaar */
 .endCard__img{
-  width:100%;
-  height: 260px;
-  object-fit: cover;
-  display:block;
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  /* Toon hele foto zonder afsnijden */
+  object-fit: contain;
+  object-position: center;
+
+  /* Optioneel: als je transparante randen of lichte background wilt */
+  background: rgba(255,255,255,.6);
 }
+
+/* Fallback overlay binnen hetzelfde frame */
 .endCard__imgFallback{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position: absolute;
+  inset: 0;
+
+  display: flex;            /* je inline style zet hem eerst op none */
+  align-items: center;
+  justify-content: center;
+
   padding: 12px;
-  text-align:center;
+  text-align: center;
   color: var(--muted);
-  font-size:.9rem;
-  background: rgba(255,255,255,.65);
+
+  background: rgba(255,255,255,.75);
 }
 
-/* Responsive */
-@media (min-width: 640px){
-  .mediaCard{
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-  }
-  .mediaCard__img{
-    height: 100%;
-    min-height: 260px;
-  }
-}
-
+/* Op hele kleine schermen iets smaller */
 @media (max-width: 380px){
-  .heroCard__title{ font-size: 1.95rem; }
-  .countdown{ flex-wrap:wrap; }
-  .cd{ min-width: calc(50% - 5px); }
+  .endCard__imgWrap{
+    max-width: 340px;
+  }
+}
+
+/* Op grotere schermen iets groter (optioneel) */
+@media (min-width: 900px){
+  .endCard__imgWrap{
+    max-width: 480px;
+  }
 }
