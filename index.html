@@ -81,32 +81,36 @@
             <h2>Locatie</h2>
             <p class="muted">Landgoed Rhederoord, De Steeg</p>
           </div>
-
-         <div class="mediaCard">
-          <div class="mediaCard__imgWrap">
-            <img
-              id="locationImg"
-              class="mediaCard__img"
-              src="assets/location.jpg"
-              alt="Locatie"
-              loading="lazy"
-              onerror="this.style.display='none'; document.getElementById('locationFallback').style.display='flex';"
-              onload="document.getElementById('locationFallback').style.display='none'; this.style.display='block';"
-            />
-            <div id="locationFallback" class="mediaCard__imgFallback" style="display:none;">
-              (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
+      
+          <div class="mediaCard">
+            <div class="mediaCard__imgWrap">
+              <img
+                id="locationImg"
+                class="mediaCard__img"
+                src="assets/location.jpg"
+                alt="Locatie"
+                loading="lazy"
+                onerror="this.style.display='none'; document.getElementById('locationFallback').style.display='flex';"
+                onload="document.getElementById('locationFallback').style.display='none'; this.style.display='block';"
+              />
+              <div id="locationFallback" class="mediaCard__imgFallback" style="display:none;">
+                (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
+              </div>
             </div>
-          </div>
-        </div>
-
+      
             <div class="mediaCard__body">
               <p class="big" id="locationText">Landgoed Rhederoord, De Steeg</p>
               <p class="muted small" id="dateText">Vrijdag 21 mei 2027</p>
-
+      
               <div class="buttonRow">
-                #Open in Google Maps</a>
-                <button class="btn btn--ghost" id="copyAddressBtn" type="button">Kopieer adres</button>
+                <a id="mapsBtn" class="btn btn--secondary" href="#" target="_blank" rel="noopener">
+                  Open in Google Maps
+                </a>
+                <button class="btn btn--ghost" id="copyAddressBtn" type="button">
+                  Kopieer adres
+                </button>
               </div>
+      
               <p class="muted small" id="copyMsg"></p>
             </div>
           </div>
