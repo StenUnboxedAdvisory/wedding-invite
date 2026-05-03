@@ -195,7 +195,7 @@ window.addEventListener("DOMContentLoaded", () => {
   function showInvite(token, invite) {
     // show protected content
     if (gate) gate.classList.add("hidden");
-    if (protectedWrap) protectedWrap.classList.remove("hidden");
+    if (protectedWrap) protectedWrap.classList.add("is-visible");
 
     // store token
     if (inviteToken) inviteToken.value = token;
