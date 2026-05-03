@@ -1,82 +1,28 @@
 window.addEventListener("DOMContentLoaded", () => {
+  // =============================
+  // Sten & Chrissy - Wedding Invite
+  // app.js (clean & working)
+  // =============================
 
   const CONFIG = {
-    = ""; }, 2200);    weddingDateISO: "2027-05-21T13:00:00+02:00",
-    });
-  }
-
-  const urlToken = getTokenFromUrl();
-  if (urlToken) {
-    const ok = tryOpen(urlToken);
-    if (!ok && gateMsg) gateMsg.textContent = "Deze link/token is niet geldig. Controleer de link of voer je code in.";
-  }
-
-  if (codeForm) {
-    codeForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const ok = tryOpen(codeInput?.value || "");
-      if (gateMsg) gateMsg.textContent = ok ? "" : "Oeps—de code klopt niet. Controleer hem en probeer opnieuw.";
-    });
-  }
-
-  if (attending) attending.addEventListener("change", setPeopleVisibility);
-
-  if (rsvpForm) {
-    rsvpForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (rsvpMsg) rsvpMsg.textContent = "Bezig met versturen…";
-
-      const token = inviteToken?.value || "";
-      const invite = window.INVITES?.[token];
-      if (!invite) {
-        if (rsvpMsg) rsvpMsg.textContent = "Er ging iets mis: uitnodiging niet gevonden.";
-        return;
-      }
-
-      const payload = {
-        token,
-        label: invite.label || "",
-        type: invite.type,
-        attending: attending?.value || "",
-        people: (attending?.value === "yes") ? Number(people?.value || 1) : 0,
-        overnight: (invite.type === "day") ? (overnight?.value || "") : "",
-        notes: notes?.value || "",
-        submittedAt: new Date().toISOString()
-      };
-
-      console.log("RSVP payload:", payload);
-
-      await new Promise(r => setTimeout(r, 450));
-
-      if (rsvpMsg) {
-        rsvpMsg.textContent = COPY_STATE.single
-          ? "Dankjewel! We kijken ernaar uit om je te zien 💛"
-          : "Dankjewel! We kijken ernaar uit om jullie te zien 💛";
-      }
-
-      const btn = rsvpForm.querySelector('button[type="submit"]');
-      if (btn) btn.disabled = true;
-    });
-  }
-
-});
+    weddingDateISO: "2027-05-21T13:00:00+02:00",
     dateText: "Vrijdag 21 mei 2027",
     locationText: "Landgoed Rhederoord, De Steeg",
     mapsQuery: "Landgoed Rhederoord, De Steeg",
-
     rsvpDeadlineText: "31 december 2026",
+
+    // tijden die je wil tonen in pill
+    dayStart: "13:00",
+    eveningStart: "20:00",
 
     dresscode:
       "Feestelijk, zomers & comfortabel ✨ Denk aan summer chic of cocktail chic. Draag vooral iets waar je je mooi in voelt.",
 
     overnightHint:
-      "Overnachting is optioneel (1 nacht) tegen €50 p.p. — ontbijt 10:30 • afsluiting 12:00.",
-
-    dayStart: "13:00",
-    eveningStart: "20:00" // avondgasten komen voor het feest
+      "Overnachting is optioneel (1 nacht) tegen €50 p.p. — ontbijt 10:30 • afsluiting 12:00."
   };
 
-  // Elements
+  // ===== Elements =====
   const gate = document.getElementById("gate");
   const protectedWrap = document.getElementById("protected");
   const gateMsg = document.getElementById("gateMsg");
@@ -134,28 +80,34 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let COPY_STATE = { single: false, isDay: false };
 
-  // Validate invites
+  // ===== Basic validations =====
   if (!window.INVITES) {
-    console.error("invites.js is not loaded. Ensure <script src='invites.js'></script> comes before app.js.");
-    if (gateMsg) gateMsg.textContent = "Er ging iets mis: uitnodigingenbestand niet geladen.";
+    console.error("window.INVITES is undefined. Zorg dat invites.js vóór app.js wordt geladen.");
+    if (gateMsg) gateMsg.textContent = "Er ging iets mis: invites.js is niet geladen.";
     return;
   }
 
-  function normalize(v){
+  if (!codeForm || !codeInput) {
+    console.error("codeForm/codeInput niet gevonden. Check IDs in index.html.");
+    return;
+  }
+
+  // ===== Helpers =====
+  function normalize(v) {
     return (v || "").trim().toUpperCase();
   }
 
-  function getTokenFromUrl(){
+  function getTokenFromUrl() {
     const url = new URL(window.location.href);
     const token = url.searchParams.get("token");
     return token ? normalize(token) : "";
   }
 
-  function isSingleInvite(invite){
+  function isSingleInvite(invite) {
     return Number(invite?.maxPeople) === 1;
   }
 
-  function applyCopy(invite){
+  function applyCopy(invite) {
     const single = isSingleInvite(invite);
 
     if (youPronounHero) youPronounHero.textContent = single ? "je" : "jullie";
@@ -170,11 +122,9 @@ window.addEventListener("DOMContentLoaded", () => {
     return single;
   }
 
-  function setDayOnlyVisibility(isDay){
-    // Alles met class dayOnly wordt getoggled.
-    // Omdat 4.1-4.4 nu dayOnly zijn, ziet een avondgast alleen het feestblok.
-    const dayOnlyEls = document.querySelectorAll(".dayOnly");
-    dayOnlyEls.forEach(el => {
+  function setDayOnlyVisibility(isDay) {
+    // alles met class dayOnly wordt verborgen voor avondgasten
+    document.querySelectorAll(".dayOnly").forEach((el) => {
       el.classList.toggle("hidden", !isDay);
     });
 
@@ -186,88 +136,94 @@ window.addEventListener("DOMContentLoaded", () => {
     if (dayTimesNote) dayTimesNote.classList.toggle("hidden", !isDay);
   }
 
-  function startCountdown(targetISO){
+  function startCountdown(targetISO) {
     const target = new Date(targetISO).getTime();
+
     const tick = () => {
       const now = Date.now();
       let diff = Math.max(0, target - now);
 
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days*(1000*60*60*24);
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours*(1000*60*60);
-      const mins = Math.floor(diff / (1000*60));
-      diff -= mins*(1000*60);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const mins = Math.floor(diff / (1000 * 60));
+      diff -= mins * (1000 * 60);
       const secs = Math.floor(diff / 1000);
 
       if (dEl) dEl.textContent = String(days);
-      if (hEl) hEl.textContent = String(hours).padStart(2,"0");
-      if (mEl) mEl.textContent = String(mins).padStart(2,"0");
-      if (sEl) sEl.textContent = String(secs).padStart(2,"0");
+      if (hEl) hEl.textContent = String(hours).padStart(2, "0");
+      if (mEl) mEl.textContent = String(mins).padStart(2, "0");
+      if (sEl) sEl.textContent = String(secs).padStart(2, "0");
     };
+
     tick();
     setInterval(tick, 1000);
   }
 
-  function configureMaps(){
+  function configureMaps() {
     if (!mapsBtn) return;
     const q = encodeURIComponent(CONFIG.mapsQuery);
     mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
   }
 
-  async function copyToClipboard(text){
-    try{
+  async function copyToClipboard(text) {
+    try {
       await navigator.clipboard.writeText(text);
       return true;
-    }catch(e){
+    } catch {
       return false;
     }
   }
 
-  function setPeopleVisibility(){
+  function setPeopleVisibility() {
     const isYes = attending?.value === "yes";
     if (peopleWrap) peopleWrap.style.display = isYes ? "block" : "none";
     if (!isYes && people) people.value = "1";
   }
 
-  function setupImageFallback(imgEl, fallbackEl){
+  function setupImageFallback(imgEl, fallbackEl) {
     if (!imgEl || !fallbackEl) return;
+
+    // default: hide fallback, show it only on error
     fallbackEl.classList.add("hidden");
 
-    imgEl.addEventListener("load", () => {
-      fallbackEl.classList.add("hidden");
-    });
-
-    imgEl.addEventListener("error", () => {
-      fallbackEl.classList.remove("hidden");
-    });
-
-    // als image src leeg is of bestand ontbreekt -> error triggert
+    imgEl.addEventListener("load", () => fallbackEl.classList.add("hidden"));
+    imgEl.addEventListener("error", () => fallbackEl.classList.remove("hidden"));
   }
 
-  function showInvite(token, invite){
+  function showInvite(token, invite) {
+    // show protected content
     if (gate) gate.classList.add("hidden");
     if (protectedWrap) protectedWrap.classList.remove("hidden");
 
+    // store token
     if (inviteToken) inviteToken.value = token;
 
+    // copy/pronouns
     const single = applyCopy(invite);
+
+    // day vs evening
     const isDay = invite.type === "day";
     COPY_STATE = { single, isDay };
-
     setDayOnlyVisibility(isDay);
 
+    // greet
     if (helloText) helloText.textContent = invite?.label ? `Hallo ${invite.label} 👋` : "";
 
+    // fill text
     if (dateText) dateText.textContent = CONFIG.dateText;
     if (locationText) locationText.textContent = CONFIG.locationText;
     if (dresscodeText) dresscodeText.textContent = CONFIG.dresscode;
 
+    // pills
     if (guestTypePill) guestTypePill.textContent = isDay ? "Daggast" : "Avondgast";
     if (startTimePill) startTimePill.textContent = `Starttijd: ${isDay ? CONFIG.dayStart : CONFIG.eveningStart}`;
 
+    // RSVP deadline
     if (rsvpDeadline) rsvpDeadline.textContent = CONFIG.rsvpDeadlineText;
 
+    // max people
     if (people && invite.maxPeople) {
       people.max = String(invite.maxPeople);
       people.value = "1";
@@ -276,9 +232,10 @@ window.addEventListener("DOMContentLoaded", () => {
       peopleHint.textContent = `Maximaal ${invite.maxPeople} persoon/personen voor deze uitnodiging.`;
     }
 
+    // overnight hint
     if (overnightHint) overnightHint.textContent = CONFIG.overnightHint;
 
-    // reset RSVP form
+    // reset RSVP
     if (rsvpMsg) rsvpMsg.textContent = "";
     if (attending) attending.value = "";
     if (overnight) overnight.value = "";
@@ -289,17 +246,17 @@ window.addEventListener("DOMContentLoaded", () => {
     startCountdown(CONFIG.weddingDateISO);
   }
 
-  function tryOpen(token){
+  function tryOpen(token) {
     const t = normalize(token);
     const invite = window.INVITES?.[t];
-    if(invite){
+    if (invite) {
       showInvite(t, invite);
       return true;
     }
     return false;
   }
 
-  // INIT
+  // ===== Init =====
   configureMaps();
   setupImageFallback(locationImg, locationFallback);
   setupImageFallback(usImg, usFallback);
@@ -308,3 +265,65 @@ window.addEventListener("DOMContentLoaded", () => {
     copyAddressBtn.addEventListener("click", async () => {
       const ok = await copyToClipboard(CONFIG.locationText);
       if (copyMsg) copyMsg.textContent = ok ? "Adres gekopieerd ✅" : "Kopiëren niet gelukt. Kopieer handmatig.";
+      setTimeout(() => {
+        if (copyMsg) copyMsg.textContent = "";
+      }, 2200);
+    });
+  }
+
+  // auto-open via URL token
+  const urlToken = getTokenFromUrl();
+  if (urlToken) {
+    const ok = tryOpen(urlToken);
+    if (!ok && gateMsg) gateMsg.textContent = "Deze link/token is niet geldig. Controleer de link of voer je code in.";
+  }
+
+  // open via code form
+  codeForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const ok = tryOpen(codeInput.value);
+    if (gateMsg) gateMsg.textContent = ok ? "" : "Oeps—de code klopt niet. Controleer hem en probeer opnieuw.";
+  });
+
+  if (attending) attending.addEventListener("change", setPeopleVisibility);
+
+  // RSVP submit (placeholder: console.log)
+  if (rsvpForm) {
+    rsvpForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (rsvpMsg) rsvpMsg.textContent = "Bezig met versturen…";
+
+      const token = inviteToken?.value || "";
+      const invite = window.INVITES?.[token];
+
+      if (!invite) {
+        if (rsvpMsg) rsvpMsg.textContent = "Er ging iets mis: uitnodiging niet gevonden.";
+        return;
+      }
+
+      const payload = {
+        token,
+        label: invite.label || "",
+        type: invite.type,
+        attending: attending?.value || "",
+        people: attending?.value === "yes" ? Number(people?.value || 1) : 0,
+        overnight: invite.type === "day" ? (overnight?.value || "") : "",
+        notes: notes?.value || "",
+        submittedAt: new Date().toISOString()
+      };
+
+      console.log("RSVP payload:", payload);
+
+      await new Promise((r) => setTimeout(r, 450));
+
+      if (rsvpMsg) {
+        rsvpMsg.textContent = COPY_STATE.single
+          ? "Dankjewel! We kijken ernaar uit om je te zien 💛"
+          : "Dankjewel! We kijken ernaar uit om jullie te zien 💛";
+      }
+
+      const btn = rsvpForm.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+    });
+  }
+});
