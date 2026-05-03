@@ -6,158 +6,292 @@
   <title>Sten & Chrissy — Uitnodiging</title>
   <meta name="theme-color" content="#fffaf3" />
 
-  <!-- Optional fonts (netter trouwkaart-gevoel) -->
+  <!-- Fonts (optioneel maar mooi) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <main class="container">
-    <header class="hero" role="banner" aria-label="Uitnodiging">
-      <div class="hero__content">
-        <p class="kicker">Jullie zijn uitgenodigd</p>
-        <h1 class="title">Sten &amp; Chrissy</h1>
-        <p class="subtitle" id="heroSubtitle">
-          Met heel veel liefde nodigen wij <span id="youPronounHero">jullie</span> uit om samen met ons te vieren
+  <main class="page">
+
+    <!-- 1) Onze namen en de datum -->
+    <section class="block block--hero">
+      <div class="heroCard">
+        <div class="heroCard__topline">Jullie zijn uitgenodigd</div>
+        <h1 class="heroCard__title">Sten &amp; Chrissy</h1>
+        <p class="heroCard__date">
+          Vrijdag <strong>21 mei 2027</strong>
+        </p>
+        <p class="heroCard__subtitle">
+          Met heel veel liefde nodigen wij <span id="youPronounHero">jullie</span> uit om samen met ons te vieren 💛
         </p>
       </div>
-    </header>
-
-    <!-- GATE -->
-    <section id="gate" class="card">
-      <h2>Open de uitnodiging</h2>
-      <p class="muted">Open je persoonlijke link uit WhatsApp. Geen link? Voer je code in.</p>
-
-      <form id="codeForm" class="form" autocomplete="off">
-        <label class="label" for="codeInput">Code</label>
-        <input id="codeInput" class="input" placeholder="Bijv. 27271930" inputmode="text" />
-        <button class="btn" type="submit">Verder</button>
-      </form>
-
-      <p id="gateMsg" class="muted small"></p>
     </section>
 
-    <!-- CONTENT -->
-    <section id="content" class="hidden" aria-live="polite">
-      <section class="card">
-        <p class="muted small" id="helloText"></p>
-        <p class="muted small">
-          Op <strong>21 mei 2027</strong> zeggen wij “ja” 💛
-        </p>
-
-        <h2>Wanneer &amp; waar</h2>
-
-        <div class="grid2">
-          <div>
-            <p class="label">Datum</p>
-            <p id="dateText" class="big">—</p>
-          </div>
-          <div>
-            <p class="label">Locatie</p>
-            <p id="locationText" class="big">—</p>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="grid2">
-          <div>
-            <p class="label">Starttijd (jouw uitnodiging)</p>
-            <p id="startTimeText" class="big">—</p>
-          </div>
-          <div>
-            <p class="label">Type gast</p>
-            <p id="guestTypeText" class="big">—</p>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-        <p id="scheduleText" class="muted">—</p>
-      </section>
-
-      <section class="card">
-        <h2>Countdown</h2>
-        <div id="countdown" class="countdown">
-          <div class="cd"><span id="d">—</span><small>dagen</small></div>
-          <div class="cd"><span id="h">—</span><small>uur</small></div>
-          <div class="cd"><span id="m">—</span><small>min</small></div>
-          <div class="cd"><span id="s">—</span><small>sec</small></div>
-        </div>
-        <p class="muted small">Tot 21 mei 2027 🥂</p>
-      </section>
-
-      <section class="card">
-        <h2>Dresscode</h2>
-        <p id="dresscodeText" class="big">—</p>
-      </section>
-
-      <section class="card">
-        <h2>RSVP</h2>
+    <!-- Gate (token/code) -->
+    <section id="gate" class="block block--gate">
+      <div class="card">
+        <h2>Open de uitnodiging</h2>
         <p class="muted">
-          <span id="rsvpIntro">Laat het ons weten</span> vóór <strong id="rsvpDeadline">—</strong>.
+          Open je persoonlijke link uit WhatsApp. Geen link? Voer je code in.
         </p>
 
-        <form id="rsvpForm" class="form">
-          <input type="hidden" id="inviteToken" name="token" />
-
-          <label class="label" for="attending">Aanwezig</label>
-          <select id="attending" class="input" name="attending" required>
-            <option value="">Kies…</option>
-            <option id="optYes" value="yes">Ja, wij komen</option>
-            <option id="optNo" value="no">Nee, helaas</option>
-          </select>
-
-          <div id="peopleWrap">
-            <label class="label" for="people">Met hoeveel personen?</label>
-            <input id="people" class="input" type="number" min="1" max="10" value="1" name="people" />
-            <p id="peopleHint" class="muted small"></p>
-          </div>
-
-          <div id="overnightWrap" class="hidden">
-            <label class="label" for="overnight">Overnachting (daggasten)</label>
-            <select id="overnight" class="input" name="overnight">
-              <option value="">Kies…</option>
-              <option value="no">Nee</option>
-              <option value="yes">Ja, graag</option>
-            </select>
-            <p id="overnightHint" class="muted small"></p>
-          </div>
-
-          <label class="label" for="notes">Opmerkingen</label>
-          <textarea id="notes" class="input" name="notes" rows="3"
-            placeholder="Allergieën, vragen, opmerkingen…"></textarea>
-
-          <button class="btn" type="submit">RSVP versturen</button>
-          <p id="rsvpMsg" class="muted small"></p>
+        <form id="codeForm" class="form" autocomplete="off">
+          <label class="label" for="codeInput">Code</label>
+          <input id="codeInput" class="input" placeholder="Bijv. 27271930" inputmode="text" />
+          <button class="btn" type="submit">Verder</button>
         </form>
+
+        <p id="gateMsg" class="muted small"></p>
+      </div>
+    </section>
+
+    <!-- Protected content: pas zichtbaar na geldige token -->
+    <div id="protected" class="hidden">
+
+      <!-- 2) Countdown + header “De dag” -->
+      <section class="block block--soft">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>De dag</h2>
+            <p class="muted">Countdown tot 21 mei 2027</p>
+          </div>
+
+          <div class="countdown" aria-label="Countdown">
+            <div class="cd"><span id="d">—</span><small>dagen</small></div>
+            <div class="cd"><span id="h">—</span><small>uur</small></div>
+            <div class="cd"><span id="m">—</span><small>min</small></div>
+            <div class="cd"><span id="s">—</span><small>sec</small></div>
+          </div>
+
+          <div class="pillRow">
+            <span class="pill" id="guestTypePill">—</span>
+            <span class="pill pill--outline" id="startTimePill">Starttijd: —</span>
+          </div>
+        </div>
       </section>
 
-      <section class="card gift">
-        <h2>Cadeautip</h2>
-        <div class="gift__row">
-          <div class="gift__icon" aria-hidden="true">💌</div>
-          <p class="gift__text">
-            Het mooiste cadeau is dat <span id="youGift1">jullie</span> erbij <span id="youGiftVerb">zijn</span>.
-            Wil <span id="youGift2">jullie</span> toch iets geven?
-            Dan waarderen we een envelopje voor onze dromen samen.
+      <!-- 3) Locatie + optioneel plaatje + Google Maps knop -->
+      <section class="block block--mint">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>Locatie</h2>
+            <p class="muted">Landgoed Rhederoord, De Steeg</p>
+          </div>
+
+          <div class="mediaCard">
+            <div class="mediaCard__imgWrap">
+              <img id="locationImg" class="mediaCard__img" src="assets/location.jpg" alt="Landgoed Rhederoord" loading="lazy" />
+              <div id="locationFallback" class="mediaCard__imgFallback">
+                (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
+              </div>
+            </div>
+
+            <div class="mediaCard__body">
+              <p class="big" id="locationText">Landgoed Rhederoord, De Steeg</p>
+              <p class="muted small" id="dateText">Vrijdag 21 mei 2027</p>
+
+              <div class="buttonRow">
+                <a class="btn btn--secondary" id="mapsBtn" href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+                <button class="btn btn--ghost" id="copyAddressBtn" type="button">Kopieer adres</button>
+              </div>
+              <p class="muted small" id="copyMsg"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) Programma -->
+      <section class="block block--peach">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>Programma</h2>
+            <p class="muted" id="helloText"></p>
+          </div>
+
+          <div class="timeline">
+
+            <!-- ✅ 4.1–4.4: alleen daggasten -->
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">📍</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Aanvang op locatie</div>
+                <div class="timelineMeta">13:00</div>
+              </div>
+            </div>
+
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">💍</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Ceremonie</div>
+                <div class="timelineMeta">Tijd volgt</div>
+              </div>
+            </div>
+
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🥂</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Toast &amp; borrel</div>
+                <div class="timelineMeta">Tijd volgt</div>
+              </div>
+            </div>
+
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🍽️</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Diner</div>
+                <div class="timelineMeta">Tijd volgt</div>
+              </div>
+            </div>
+
+            <!-- ✅ 4.5: voor ALLE gasten -->
+            <div class="timelineItem timelineItem--highlight">
+              <div class="timelineIcon">🎉</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Feest</div>
+                <div class="timelineMeta">Voor alle gasten — 20:00 tot 01:00</div>
+              </div>
+            </div>
+
+            <!-- ✅ 4.6: alleen daggasten -->
+            <div id="afterpartyRow" class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🍻</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Naborrel (daggasten)</div>
+                <div class="timelineMeta">Na het feest — voor wie nog zin heeft</div>
+              </div>
+            </div>
+
+            <!-- ✅ 4.7: alleen daggasten -->
+            <div id="overnightRow" class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🛏️</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Overnachting (daggasten)</div>
+                <div class="timelineMeta">
+                  Optioneel — €50 p.p. (1 nacht) <br/>
+                  Volgende dag: ontbijt 10:30 • afsluiting 12:00
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="muted small dayOnly hidden" id="dayTimesNote">
+            *Tijden van ceremonie/borrel/diner worden later bevestigd.
           </p>
         </div>
       </section>
 
-      <section id="dayOnlyMenu" class="card hidden">
-        <h2>Menu (daggasten)</h2>
-        <p id="menuText" class="muted">—</p>
+      <!-- 5) Dresscode -->
+      <section class="block block--soft">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>Dresscode</h2>
+            <p class="muted">Feestelijk, zomers &amp; comfortabel</p>
+          </div>
+          <p class="big" id="dresscodeText">—</p>
+        </div>
       </section>
 
-      <footer class="footer">
-        <p class="muted small">Vragen? App ons gerust 💬</p>
-      </footer>
-    </section>
+      <!-- 6) Menu — alleen daggasten -->
+      <section id="menuSection" class="block block--mint dayOnly hidden">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>Menu</h2>
+            <p class="muted">To be announced</p>
+          </div>
+          <p class="muted">Menu details volgen. Allergieën of dieetwensen? Zet het bij je RSVP.</p>
+        </div>
+      </section>
+
+      <!-- 7) Cadeautip -->
+      <section class="block block--gold">
+        <div class="card gift">
+          <div class="sectionHeader">
+            <h2>Cadeautip</h2>
+            <p class="muted">💌 Een envelopje</p>
+          </div>
+
+          <div class="gift__row">
+            <div class="gift__icon" aria-hidden="true">💌</div>
+            <p class="gift__text">
+              Het mooiste cadeau is dat <span id="youGift1">jullie</span> erbij <span id="youGiftVerb">zijn</span>.
+              Wil <span id="youGift2">jullie</span> toch iets geven?
+              Dan waarderen we een envelopje voor onze dromen samen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8) RSVP -->
+      <section class="block block--peach">
+        <div class="card">
+          <div class="sectionHeader">
+            <h2>RSVP</h2>
+            <p class="muted"><span id="rsvpIntro">Laat het ons weten</span> vóór <strong id="rsvpDeadline">—</strong>.</p>
+          </div>
+
+          <form id="rsvpForm" class="form">
+            <input type="hidden" id="inviteToken" name="token" />
+
+            <label class="label" for="attending">Aanwezig</label>
+            <select id="attending" class="input" name="attending" required>
+              <option value="">Kies…</option>
+              <option id="optYes" value="yes">Ja, wij komen</option>
+              <option id="optNo" value="no">Nee, helaas</option>
+            </select>
+
+            <div id="peopleWrap">
+              <label class="label" for="people">Met hoeveel personen?</label>
+              <input id="people" class="input" type="number" min="1" max="10" value="1" name="people" />
+              <p id="peopleHint" class="muted small"></p>
+            </div>
+
+            <!-- alleen daggasten -->
+            <div id="overnightWrap" class="dayOnly hidden">
+              <label class="label" for="overnight">Overnachting (daggasten)</label>
+              <select id="overnight" class="input" name="overnight">
+                <option value="">Kies…</option>
+                <option value="no">Nee</option>
+                <option value="yes">Ja, graag (à €50 p.p.)</option>
+              </select>
+              <p id="overnightHint" class="muted small"></p>
+            </div>
+
+            <label class="label" for="notes">Opmerkingen</label>
+            <textarea id="notes" class="input" name="notes" rows="3" placeholder="Allergieën, vragen, opmerkingen…"></textarea>
+
+            <button class="btn" type="submit">RSVP versturen</button>
+            <p id="rsvpMsg" class="muted small"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- 9) Afsluiten met foto -->
+      <section class="block block--soft block--end">
+        <div class="card endCard">
+          <div class="endCard__imgWrap">
+            <img id="usImg" class="endCard__img" src="assets/us.jpg" alt="Sten & Chrissy" loading="lazy" />
+            <div id="usFallback" class="endCard__imgFallback">
+              (Voeg een foto toe: <code>assets/us.jpg</code>)
+            </div>
+          </div>
+
+          <h2>Tot dan! 💛</h2>
+          <p class="muted">
+            We kijken er enorm naar uit om samen een onvergetelijke dag te beleven.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
   </main>
 
+  <!-- Scripts: invites.js MOET vóór app.js -->
   <script src="invites.js"></script>
   <script src="app.js"></script>
 </body>
