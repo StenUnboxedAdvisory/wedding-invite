@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sten & Chrissy — Uitnodiging</title>
+  <title>Sten &amp; Chrissy — Uitnodiging</title>
   <meta name="theme-color" content="#fffaf3" />
 
-  <!-- Fonts (optioneel maar mooi) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts (optioneel, maar mooi) -->
+  https://fonts.googleapis.com
+  https://fonts.gstatic.com
+  https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500;600&display=swap
 
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css" />
+  styles.css?v=4
 </head>
 
 <body>
@@ -23,9 +23,7 @@
       <div class="heroCard">
         <div class="heroCard__topline">Jullie zijn uitgenodigd</div>
         <h1 class="heroCard__title">Sten &amp; Chrissy</h1>
-        <p class="heroCard__date">
-          Vrijdag <strong>21 mei 2027</strong>
-        </p>
+        <p class="heroCard__date">Vrijdag <strong>21 mei 2027</strong></p>
         <p class="heroCard__subtitle">
           Met heel veel liefde nodigen wij <span id="youPronounHero">jullie</span> uit om samen met ons te vieren 💛
         </p>
@@ -36,9 +34,7 @@
     <section id="gate" class="block block--gate">
       <div class="card">
         <h2>Open de uitnodiging</h2>
-        <p class="muted">
-          Open je persoonlijke link uit WhatsApp. Geen link? Voer je code in.
-        </p>
+        <p class="muted">Open je persoonlijke link uit WhatsApp. Geen link? Voer je code in.</p>
 
         <form id="codeForm" class="form" autocomplete="off">
           <label class="label" for="codeInput">Code</label>
@@ -50,7 +46,7 @@
       </div>
     </section>
 
-    <!-- Protected content: pas zichtbaar na geldige token -->
+    <!-- Protected content: zichtbaar na geldige token -->
     <div id="protected" class="hidden">
 
       <!-- 2) Countdown + header “De dag” -->
@@ -75,7 +71,7 @@
         </div>
       </section>
 
-      <!-- 3) Locatie + optioneel plaatje + Google Maps knop -->
+      <!-- 3) Locatie + foto + Google Maps knop -->
       <section class="block block--mint">
         <div class="card">
           <div class="sectionHeader">
@@ -85,7 +81,7 @@
 
           <div class="mediaCard">
             <div class="mediaCard__imgWrap">
-              <img id="locationImg" class="mediaCard__img" src="assets/location.jpg" alt="Landgoed Rhederoord" loading="lazy" />
+              assets/location.jpg
               <div id="locationFallback" class="mediaCard__imgFallback">
                 (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
               </div>
@@ -96,7 +92,7 @@
               <p class="muted small" id="dateText">Vrijdag 21 mei 2027</p>
 
               <div class="buttonRow">
-                <a class="btn btn--secondary" id="mapsBtn" href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+                #Open in Google Maps</a>
                 <button class="btn btn--ghost" id="copyAddressBtn" type="button">Kopieer adres</button>
               </div>
               <p class="muted small" id="copyMsg"></p>
@@ -105,7 +101,8 @@
         </div>
       </section>
 
-      <!-- 4) Programma -->
+      <!-- 4) Programma
+           Avondgasten zien alleen FEEST (de rest is dayOnly) -->
       <section class="block block--peach">
         <div class="card">
           <div class="sectionHeader">
@@ -114,8 +111,7 @@
           </div>
 
           <div class="timeline">
-
-            <!-- ✅ 4.1–4.4: alleen daggasten -->
+            <!-- 4.1–4.4 alleen daggasten -->
             <div class="timelineItem dayOnly hidden">
               <div class="timelineIcon">📍</div>
               <div class="timelineBody">
@@ -148,7 +144,7 @@
               </div>
             </div>
 
-            <!-- ✅ 4.5: voor ALLE gasten -->
+            <!-- 4.5 voor alle gasten -->
             <div class="timelineItem timelineItem--highlight">
               <div class="timelineIcon">🎉</div>
               <div class="timelineBody">
@@ -157,7 +153,7 @@
               </div>
             </div>
 
-            <!-- ✅ 4.6: alleen daggasten -->
+            <!-- 4.6 daggasten -->
             <div id="afterpartyRow" class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🍻</div>
               <div class="timelineBody">
@@ -166,13 +162,13 @@
               </div>
             </div>
 
-            <!-- ✅ 4.7: alleen daggasten -->
+            <!-- 4.7 daggasten -->
             <div id="overnightRow" class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🛏️</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Overnachting (daggasten)</div>
                 <div class="timelineMeta">
-                  Optioneel — €50 p.p. (1 nacht) <br/>
+                  Optioneel — €50 p.p. (1 nacht)<br>
                   Volgende dag: ontbijt 10:30 • afsluiting 12:00
                 </div>
               </div>
@@ -231,7 +227,9 @@
         <div class="card">
           <div class="sectionHeader">
             <h2>RSVP</h2>
-            <p class="muted"><span id="rsvpIntro">Laat het ons weten</span> vóór <strong id="rsvpDeadline">—</strong>.</p>
+            <p class="muted">
+              <span id="rsvpIntro">Laat het ons weten</span> vóór <strong id="rsvpDeadline">—</strong>.
+            </p>
           </div>
 
           <form id="rsvpForm" class="form">
@@ -250,7 +248,6 @@
               <p id="peopleHint" class="muted small"></p>
             </div>
 
-            <!-- alleen daggasten -->
             <div id="overnightWrap" class="dayOnly hidden">
               <label class="label" for="overnight">Overnachting (daggasten)</label>
               <select id="overnight" class="input" name="overnight">
@@ -274,25 +271,22 @@
       <section class="block block--soft block--end">
         <div class="card endCard">
           <div class="endCard__imgWrap">
-            <img id="usImg" class="endCard__img" src="assets/us.jpg" alt="Sten & Chrissy" loading="lazy" />
+            assets/us.jpg
             <div id="usFallback" class="endCard__imgFallback">
               (Voeg een foto toe: <code>assets/us.jpg</code>)
             </div>
           </div>
 
           <h2>Tot dan! 💛</h2>
-          <p class="muted">
-            We kijken er enorm naar uit om samen een onvergetelijke dag te beleven.
-          </p>
+          <p class="muted">We kijken er enorm naar uit om samen een onvergetelijke dag te beleven.</p>
         </div>
       </section>
 
     </div>
-
   </main>
 
-  <!-- Scripts: invites.js MOET vóór app.js -->
-  <script src="invites.js"></script>
-  <script src="app.js"></script>
+  <!-- Scripts: invites.js moet vóór app.js -->
+  invites.js?v=4</script>
+  app.js?v=4script>
 </body>
 </html>
