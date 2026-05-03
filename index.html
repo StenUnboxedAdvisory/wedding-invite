@@ -119,80 +119,104 @@
 
       <!-- 4) Programma
            Avondgasten zien alleen FEEST (de rest is dayOnly) -->
-      <section class="block block--peach">
+       <section class="block block--peach">
         <div class="card">
           <div class="sectionHeader">
             <h2>Programma</h2>
             <p class="muted" id="helloText"></p>
           </div>
-
+      
           <div class="timeline">
-            <!-- 4.1–4.4 alleen daggasten -->
+            <!-- 4.1–4.4 + receptie/borrel + diner: alleen daggasten -->
             <div class="timelineItem dayOnly hidden">
-              <div class="timelineIcon">📍</div>
+              <div class="timelineIcon">👋</div>
               <div class="timelineBody">
-                <div class="timelineTitle">Aanvang op locatie</div>
-                <div class="timelineMeta">13:00</div>
+                <div class="timelineTitle">Ontvangst gasten</div>
+                <div class="timelineMeta">13:30 – 14:00</div>
               </div>
             </div>
-
+      
             <div class="timelineItem dayOnly hidden">
               <div class="timelineIcon">💍</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Ceremonie</div>
-                <div class="timelineMeta">Tijd volgt</div>
+                <div class="timelineMeta">14:00 – 14:45</div>
               </div>
             </div>
-
+      
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🍰</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Toast (&amp; taart)</div>
+                <div class="timelineMeta">14:45 – 15:15</div>
+              </div>
+            </div>
+      
+            <!-- ✅ Toegevoegd: receptie/borrel -->
             <div class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🥂</div>
               <div class="timelineBody">
-                <div class="timelineTitle">Toast &amp; borrel</div>
-                <div class="timelineMeta">Tijd volgt</div>
+                <div class="timelineTitle">Receptie / borrel</div>
+                <div class="timelineMeta">15:15 – 17:30</div>
               </div>
             </div>
-
+      
             <div class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🍽️</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Diner</div>
-                <div class="timelineMeta">Tijd volgt</div>
+                <div class="timelineMeta">17:30 – 20:30</div>
               </div>
             </div>
-
-            <!-- 4.5 voor alle gasten -->
+      
+            <!-- 4.5: altijd zichtbaar (dag + avond) -->
             <div class="timelineItem timelineItem--highlight">
               <div class="timelineIcon">🎉</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Feest</div>
-                <div class="timelineMeta">Voor alle gasten — 20:00 tot 01:00</div>
+                <div class="timelineMeta">Voor alle gasten — 20:30 – 00:30</div>
               </div>
             </div>
-
-            <!-- 4.6 daggasten -->
+      
+            <!-- 4.6: daggasten -->
             <div id="afterpartyRow" class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🍻</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Naborrel (daggasten)</div>
-                <div class="timelineMeta">Na het feest — voor wie nog zin heeft</div>
+                <div class="timelineMeta">00:30 – 02:00</div>
               </div>
             </div>
-
-            <!-- 4.7 daggasten -->
+      
+            <!-- 4.7: daggasten -->
             <div id="overnightRow" class="timelineItem dayOnly hidden">
               <div class="timelineIcon">🛏️</div>
               <div class="timelineBody">
                 <div class="timelineTitle">Overnachting (daggasten)</div>
-                <div class="timelineMeta">
-                  Optioneel — €50 p.p. (1 nacht)<br>
-                  Volgende dag: ontbijt 10:30 • afsluiting 12:00
-                </div>
+                <div class="timelineMeta">02:00 – 09:00</div>
+              </div>
+            </div>
+      
+            <!-- ✅ Nieuw: Ontbijt (los blok) -->
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🍳</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Ontbijt (daggasten)</div>
+                <div class="timelineMeta">09:00 – 10:30</div>
+              </div>
+            </div>
+      
+            <!-- ✅ Nieuw: Check-out (los blok) -->
+            <div class="timelineItem dayOnly hidden">
+              <div class="timelineIcon">🧳</div>
+              <div class="timelineBody">
+                <div class="timelineTitle">Check-out (daggasten)</div>
+                <div class="timelineMeta">10:30</div>
               </div>
             </div>
           </div>
-
+      
           <p class="muted small dayOnly hidden" id="dayTimesNote">
-            *Tijden van ceremonie/borrel/diner worden later bevestigd.
+            *Programma en tijden zijn onder voorbehoud van kleine wijzigingen.
           </p>
         </div>
       </section>
