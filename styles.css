@@ -415,27 +415,14 @@ textarea.input{ resize: vertical; min-height: 90px; }
     max-width: 480px;
   }
 }
-
-/* FAIL-SAFE: protected content nooit tonen zonder token *//* FAIL-SAFE: protected content nooit tonen zonder token block;
-}
-#protected {
-  display: none;
-}
-#protected.is-visible {
-
-/* Fail-safe: hidden moet ALTIJD verbergen */
+/* === Gate fail-safe (clean) === */
 .hidden { 
   display: none !important; 
 }
 
-/* Optional: visible state for #protected */
+/* Optional: als je met is-visible werkt */
 #protected.is-visible {
   display: block !important;
 }
-
-.hidden { .hidden}
-
-#protected.is-visible {
-  display: block !important;
 }
   display: none !important; 
