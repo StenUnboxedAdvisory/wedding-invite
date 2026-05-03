@@ -1,245 +1,25 @@
-// =============================
-// Sten & Chrissy - Wedding Invite
-// app.js (FIXED: no TDZ / correct initialization order)
-// =============================
-
 window.addEventListener("DOMContentLoaded", () => {
 
-  // ====== CONFIG (jullie details) ======
   const CONFIG = {
-    weddingDateISO: "2027-05-21T13:00:00+02:00",
-    rsvpDeadlineText: "31 december 2026",
-    locationText: "Landgoed Rhederoord, De Steeg",
-
-    dresscode:
-      "Feestelijk & verzorgd ✨ — draag iets waar je je mooi én comfortabel in voelt. Denk aan cocktail chic / summer chic (geen verplichtingen).",
-
-    day: {
-      dateText: "Vrijdag 21 mei 2027",
-      startTimeText: "13:00",
-      scheduleText:
-        "Dagprogramma start om 13:00. (Meer details volgen later — zet de datum alvast in je agenda.)",
-      menuText:
-        "Menu volgt. Heb je allergieën of dieetwensen? Zet dit dan bij je RSVP in de opmerkingen.",
-      overnightHint:
-        "Er is 1 overnachting mogelijk voor daggasten. Mogelijke kosten: €50 per persoon. We nemen contact op voor bevestiging & afstemming."
-    },
-
-    evening: {
-      dateText: "Vrijdag 21 mei 2027",
-      startTimeText: "21:00",
-      scheduleText:
-        "Avondprogramma start om 21:00. (Meer details volgen later — we kijken ernaar uit om samen te proosten!)"
-    }
-  };
-
-  // ====== ELEMENTS (EERST DECLAREREN, DAN PAS GEBRUIKEN) ======
-  const gate = document.getElementById("gate");
-  const content = document.getElementById("content");
-  const gateMsg = document.getElementById("gateMsg");
-  const codeForm = document.getElementById("codeForm");
-  const codeInput = document.getElementById("codeInput");
-
-  const helloText = document.getElementById("helloText");
-  const dateText = document.getElementById("dateText");
-  const locationText = document.getElementById("locationText");
-  const startTimeText = document.getElementById("startTimeText");
-  const guestTypeText = document.getElementById("guestTypeText");
-  const scheduleText = document.getElementById("scheduleText");
-
-  const dresscodeText = document.getElementById("dresscodeText");
-  const rsvpDeadline = document.getElementById("rsvpDeadline");
-  const rsvpIntro = document.getElementById("rsvpIntro");
-
-  const optYes = document.getElementById("optYes");
-  const optNo = document.getElementById("optNo");
-
-  const dayOnlyMenu = document.getElementById("dayOnlyMenu");
-  const menuText = document.getElementById("menuText");
-
-  const overnightWrap = document.getElementById("overnightWrap");
-  const overnightHint = document.getElementById("overnightHint");
-  const overnight = document.getElementById("overnight");
-
-  const inviteToken = document.getElementById("inviteToken");
-  const rsvpForm = document.getElementById("rsvpForm");
-  const rsvpMsg = document.getElementById("rsvpMsg");
-  const attending = document.getElementById("attending");
-  const peopleWrap = document.getElementById("peopleWrap");
-  const people = document.getElementById("people");
-  const peopleHint = document.getElementById("peopleHint");
-  const notes = document.getElementById("notes");
-
-  // Pronoun spans
-  const youPronounHero = document.getElementById("youPronounHero");
-  const youGift1 = document.getElementById("youGift1");
-  const youGift2 = document.getElementById("youGift2");
-  const youGiftVerb = document.getElementById("youGiftVerb");
-
-  // Countdown fields
-  const dEl = document.getElementById("d");
-  const hEl = document.getElementById("h");
-  const mEl = document.getElementById("m");
-  const sEl = document.getElementById("s");
-
-  // ====== STATE ======
-  let COPY_STATE = { single: false };
-
-  // ====== SAFETY CHECKS ======
-  // Als deze missen, is je HTML niet up-to-date.
-  if (!codeForm || !codeInput) {
-    console.error("codeForm of codeInput niet gevonden. Check je index.html IDs.");
-    return;
-  }
-  if (!window.INVITES) {
-    console.error("window.INVITES is undefined. invites.js wordt niet geladen of staat niet vóór app.js in index.html.");
-    gateMsg.textContent = "Er ging iets mis: uitnodigingenbestand niet geladen.";
-    return;
+    = ""; }, 2200);    weddingDateISO: "2027-05-21T13:00:00+02:00",
+    });
   }
 
-  // ====== HELPERS ======
-  function normalize(v){
-    return (v || "").trim().toUpperCase();
-  }
-
-  function getTokenFromUrl(){
-    const url = new URL(window.location.href);
-    const token = url.searchParams.get("token");
-    return token ? normalize(token) : "";
-  }
-
-  function isSingleInvite(invite){
-    return Number(invite?.maxPeople) === 1;
-  }
-
-  function applyCopyForInvite(invite){
-    const single = isSingleInvite(invite);
-
-    // Hero: jullie/je
-    if (youPronounHero) youPronounHero.textContent = single ? "je" : "jullie";
-
-    // RSVP dropdown
-    if (optYes) optYes.textContent = single ? "Ja, ik kom" : "Ja, wij komen";
-    if (optNo) optNo.textContent = "Nee, helaas";
-
-    if (rsvpIntro) rsvpIntro.textContent = "Laat het ons weten";
-
-    // Cadeautip
-    if (youGift1) youGift1.textContent = single ? "je" : "jullie";
-    if (youGift2) youGift2.textContent = single ? "je" : "jullie";
-    if (youGiftVerb) youGiftVerb.textContent = single ? "bent" : "zijn";
-
-    return { single };
-  }
-
-  function startCountdown(targetISO){
-    const target = new Date(targetISO).getTime();
-
-    const tick = () => {
-      const now = Date.now();
-      let diff = Math.max(0, target - now);
-
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days*(1000*60*60*24);
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours*(1000*60*60);
-      const mins = Math.floor(diff / (1000*60));
-      diff -= mins*(1000*60);
-      const secs = Math.floor(diff / 1000);
-
-      if (dEl) dEl.textContent = String(days);
-      if (hEl) hEl.textContent = String(hours).padStart(2,"0");
-      if (mEl) mEl.textContent = String(mins).padStart(2,"0");
-      if (sEl) sEl.textContent = String(secs).padStart(2,"0");
-    };
-
-    tick();
-    setInterval(tick, 1000);
-  }
-
-  function showInvite(token, invite){
-    gate.classList.add("hidden");
-    content.classList.remove("hidden");
-
-    COPY_STATE = applyCopyForInvite(invite);
-    if (inviteToken) inviteToken.value = token;
-
-    // General content
-    if (dresscodeText) dresscodeText.textContent = CONFIG.dresscode;
-    if (rsvpDeadline) rsvpDeadline.textContent = CONFIG.rsvpDeadlineText;
-    if (locationText) locationText.textContent = CONFIG.locationText;
-
-    // Greeting
-    if (helloText) helloText.textContent = invite?.label ? `Hallo ${invite.label} 👋` : "";
-
-    // Type-based content
-    const isDay = invite.type === "day";
-    if (guestTypeText) guestTypeText.textContent = isDay ? "Daggast" : "Avondgast";
-
-    if (isDay) {
-      if (dateText) dateText.textContent = CONFIG.day.dateText;
-      if (startTimeText) startTimeText.textContent = CONFIG.day.startTimeText;
-      if (scheduleText) scheduleText.textContent = CONFIG.day.scheduleText;
-
-      if (dayOnlyMenu) dayOnlyMenu.classList.remove("hidden");
-      if (menuText) menuText.textContent = CONFIG.day.menuText;
-
-      if (overnightWrap) overnightWrap.classList.remove("hidden");
-      if (overnightHint) overnightHint.textContent = CONFIG.day.overnightHint;
-    } else {
-      if (dateText) dateText.textContent = CONFIG.evening.dateText;
-      if (startTimeText) startTimeText.textContent = CONFIG.evening.startTimeText;
-      if (scheduleText) scheduleText.textContent = CONFIG.evening.scheduleText;
-
-      if (dayOnlyMenu) dayOnlyMenu.classList.add("hidden");
-      if (overnightWrap) overnightWrap.classList.add("hidden");
-      if (overnight) overnight.value = "";
-    }
-
-    // max people
-    if (people && invite.maxPeople) {
-      people.max = String(invite.maxPeople);
-      people.value = "1";
-    }
-    if (peopleHint && invite.maxPeople) {
-      peopleHint.textContent = `Maximaal ${invite.maxPeople} persoon/personen voor deze uitnodiging.`;
-    }
-
-    startCountdown(CONFIG.weddingDateISO);
-  }
-
-  function tryOpen(token){
-    const t = normalize(token);
-    const invite = window.INVITES?.[t];
-    if (invite) {
-      showInvite(t, invite);
-      return true;
-    }
-    return false;
-  }
-
-  // ====== GATE LOGIC ======
   const urlToken = getTokenFromUrl();
   if (urlToken) {
     const ok = tryOpen(urlToken);
-    if (!ok) {
-      gateMsg.textContent = "Deze link/token is niet geldig. Controleer de link of voer je code in.";
-    }
+    if (!ok && gateMsg) gateMsg.textContent = "Deze link/token is niet geldig. Controleer de link of voer je code in.";
   }
 
-  codeForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const ok = tryOpen(codeInput.value);
-    gateMsg.textContent = ok ? "" : "Oeps—de code klopt niet. Controleer hem en probeer opnieuw.";
-  });
-
-  // ====== RSVP LOGIC ======
-  function setPeopleVisibility(){
-    const isYes = attending?.value === "yes";
-    if (peopleWrap) peopleWrap.style.display = isYes ? "block" : "none";
+  if (codeForm) {
+    codeForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ok = tryOpen(codeInput?.value || "");
+      if (gateMsg) gateMsg.textContent = ok ? "" : "Oeps—de code klopt niet. Controleer hem en probeer opnieuw.";
+    });
   }
+
   if (attending) attending.addEventListener("change", setPeopleVisibility);
-  setPeopleVisibility();
 
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -266,7 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       console.log("RSVP payload:", payload);
 
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 450));
 
       if (rsvpMsg) {
         rsvpMsg.textContent = COPY_STATE.single
@@ -280,3 +60,251 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+    dateText: "Vrijdag 21 mei 2027",
+    locationText: "Landgoed Rhederoord, De Steeg",
+    mapsQuery: "Landgoed Rhederoord, De Steeg",
+
+    rsvpDeadlineText: "31 december 2026",
+
+    dresscode:
+      "Feestelijk, zomers & comfortabel ✨ Denk aan summer chic of cocktail chic. Draag vooral iets waar je je mooi in voelt.",
+
+    overnightHint:
+      "Overnachting is optioneel (1 nacht) tegen €50 p.p. — ontbijt 10:30 • afsluiting 12:00.",
+
+    dayStart: "13:00",
+    eveningStart: "20:00" // avondgasten komen voor het feest
+  };
+
+  // Elements
+  const gate = document.getElementById("gate");
+  const protectedWrap = document.getElementById("protected");
+  const gateMsg = document.getElementById("gateMsg");
+  const codeForm = document.getElementById("codeForm");
+  const codeInput = document.getElementById("codeInput");
+
+  const youPronounHero = document.getElementById("youPronounHero");
+  const youGift1 = document.getElementById("youGift1");
+  const youGift2 = document.getElementById("youGift2");
+  const youGiftVerb = document.getElementById("youGiftVerb");
+
+  const guestTypePill = document.getElementById("guestTypePill");
+  const startTimePill = document.getElementById("startTimePill");
+
+  const helloText = document.getElementById("helloText");
+  const dateText = document.getElementById("dateText");
+  const locationText = document.getElementById("locationText");
+  const dresscodeText = document.getElementById("dresscodeText");
+
+  const mapsBtn = document.getElementById("mapsBtn");
+  const copyAddressBtn = document.getElementById("copyAddressBtn");
+  const copyMsg = document.getElementById("copyMsg");
+
+  const locationImg = document.getElementById("locationImg");
+  const locationFallback = document.getElementById("locationFallback");
+  const usImg = document.getElementById("usImg");
+  const usFallback = document.getElementById("usFallback");
+
+  const menuSection = document.getElementById("menuSection");
+  const afterpartyRow = document.getElementById("afterpartyRow");
+  const overnightRow = document.getElementById("overnightRow");
+  const dayTimesNote = document.getElementById("dayTimesNote");
+
+  const rsvpDeadline = document.getElementById("rsvpDeadline");
+  const rsvpIntro = document.getElementById("rsvpIntro");
+  const optYes = document.getElementById("optYes");
+  const optNo = document.getElementById("optNo");
+
+  const inviteToken = document.getElementById("inviteToken");
+  const rsvpForm = document.getElementById("rsvpForm");
+  const rsvpMsg = document.getElementById("rsvpMsg");
+  const attending = document.getElementById("attending");
+  const peopleWrap = document.getElementById("peopleWrap");
+  const people = document.getElementById("people");
+  const peopleHint = document.getElementById("peopleHint");
+  const overnightWrap = document.getElementById("overnightWrap");
+  const overnight = document.getElementById("overnight");
+  const overnightHint = document.getElementById("overnightHint");
+  const notes = document.getElementById("notes");
+
+  const dEl = document.getElementById("d");
+  const hEl = document.getElementById("h");
+  const mEl = document.getElementById("m");
+  const sEl = document.getElementById("s");
+
+  let COPY_STATE = { single: false, isDay: false };
+
+  // Validate invites
+  if (!window.INVITES) {
+    console.error("invites.js is not loaded. Ensure <script src='invites.js'></script> comes before app.js.");
+    if (gateMsg) gateMsg.textContent = "Er ging iets mis: uitnodigingenbestand niet geladen.";
+    return;
+  }
+
+  function normalize(v){
+    return (v || "").trim().toUpperCase();
+  }
+
+  function getTokenFromUrl(){
+    const url = new URL(window.location.href);
+    const token = url.searchParams.get("token");
+    return token ? normalize(token) : "";
+  }
+
+  function isSingleInvite(invite){
+    return Number(invite?.maxPeople) === 1;
+  }
+
+  function applyCopy(invite){
+    const single = isSingleInvite(invite);
+
+    if (youPronounHero) youPronounHero.textContent = single ? "je" : "jullie";
+    if (youGift1) youGift1.textContent = single ? "je" : "jullie";
+    if (youGift2) youGift2.textContent = single ? "je" : "jullie";
+    if (youGiftVerb) youGiftVerb.textContent = single ? "bent" : "zijn";
+
+    if (optYes) optYes.textContent = single ? "Ja, ik kom" : "Ja, wij komen";
+    if (optNo) optNo.textContent = "Nee, helaas";
+    if (rsvpIntro) rsvpIntro.textContent = "Laat het ons weten";
+
+    return single;
+  }
+
+  function setDayOnlyVisibility(isDay){
+    // Alles met class dayOnly wordt getoggled.
+    // Omdat 4.1-4.4 nu dayOnly zijn, ziet een avondgast alleen het feestblok.
+    const dayOnlyEls = document.querySelectorAll(".dayOnly");
+    dayOnlyEls.forEach(el => {
+      el.classList.toggle("hidden", !isDay);
+    });
+
+    // extra zekerheid
+    if (menuSection) menuSection.classList.toggle("hidden", !isDay);
+    if (afterpartyRow) afterpartyRow.classList.toggle("hidden", !isDay);
+    if (overnightRow) overnightRow.classList.toggle("hidden", !isDay);
+    if (overnightWrap) overnightWrap.classList.toggle("hidden", !isDay);
+    if (dayTimesNote) dayTimesNote.classList.toggle("hidden", !isDay);
+  }
+
+  function startCountdown(targetISO){
+    const target = new Date(targetISO).getTime();
+    const tick = () => {
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days*(1000*60*60*24);
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours*(1000*60*60);
+      const mins = Math.floor(diff / (1000*60));
+      diff -= mins*(1000*60);
+      const secs = Math.floor(diff / 1000);
+
+      if (dEl) dEl.textContent = String(days);
+      if (hEl) hEl.textContent = String(hours).padStart(2,"0");
+      if (mEl) mEl.textContent = String(mins).padStart(2,"0");
+      if (sEl) sEl.textContent = String(secs).padStart(2,"0");
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  function configureMaps(){
+    if (!mapsBtn) return;
+    const q = encodeURIComponent(CONFIG.mapsQuery);
+    mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  }
+
+  async function copyToClipboard(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function setPeopleVisibility(){
+    const isYes = attending?.value === "yes";
+    if (peopleWrap) peopleWrap.style.display = isYes ? "block" : "none";
+    if (!isYes && people) people.value = "1";
+  }
+
+  function setupImageFallback(imgEl, fallbackEl){
+    if (!imgEl || !fallbackEl) return;
+    fallbackEl.classList.add("hidden");
+
+    imgEl.addEventListener("load", () => {
+      fallbackEl.classList.add("hidden");
+    });
+
+    imgEl.addEventListener("error", () => {
+      fallbackEl.classList.remove("hidden");
+    });
+
+    // als image src leeg is of bestand ontbreekt -> error triggert
+  }
+
+  function showInvite(token, invite){
+    if (gate) gate.classList.add("hidden");
+    if (protectedWrap) protectedWrap.classList.remove("hidden");
+
+    if (inviteToken) inviteToken.value = token;
+
+    const single = applyCopy(invite);
+    const isDay = invite.type === "day";
+    COPY_STATE = { single, isDay };
+
+    setDayOnlyVisibility(isDay);
+
+    if (helloText) helloText.textContent = invite?.label ? `Hallo ${invite.label} 👋` : "";
+
+    if (dateText) dateText.textContent = CONFIG.dateText;
+    if (locationText) locationText.textContent = CONFIG.locationText;
+    if (dresscodeText) dresscodeText.textContent = CONFIG.dresscode;
+
+    if (guestTypePill) guestTypePill.textContent = isDay ? "Daggast" : "Avondgast";
+    if (startTimePill) startTimePill.textContent = `Starttijd: ${isDay ? CONFIG.dayStart : CONFIG.eveningStart}`;
+
+    if (rsvpDeadline) rsvpDeadline.textContent = CONFIG.rsvpDeadlineText;
+
+    if (people && invite.maxPeople) {
+      people.max = String(invite.maxPeople);
+      people.value = "1";
+    }
+    if (peopleHint && invite.maxPeople) {
+      peopleHint.textContent = `Maximaal ${invite.maxPeople} persoon/personen voor deze uitnodiging.`;
+    }
+
+    if (overnightHint) overnightHint.textContent = CONFIG.overnightHint;
+
+    // reset RSVP form
+    if (rsvpMsg) rsvpMsg.textContent = "";
+    if (attending) attending.value = "";
+    if (overnight) overnight.value = "";
+    if (notes) notes.value = "";
+    if (people) people.value = "1";
+    setPeopleVisibility();
+
+    startCountdown(CONFIG.weddingDateISO);
+  }
+
+  function tryOpen(token){
+    const t = normalize(token);
+    const invite = window.INVITES?.[t];
+    if(invite){
+      showInvite(t, invite);
+      return true;
+    }
+    return false;
+  }
+
+  // INIT
+  configureMaps();
+  setupImageFallback(locationImg, locationFallback);
+  setupImageFallback(usImg, usFallback);
+
+  if (copyAddressBtn) {
+    copyAddressBtn.addEventListener("click", async () => {
+      const ok = await copyToClipboard(CONFIG.locationText);
+      if (copyMsg) copyMsg.textContent = ok ? "Adres gekopieerd ✅" : "Kopiëren niet gelukt. Kopieer handmatig.";
