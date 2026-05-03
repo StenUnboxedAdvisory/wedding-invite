@@ -195,7 +195,11 @@ window.addEventListener("DOMContentLoaded", () => {
   function showInvite(token, invite) {
     // show protected content
     if (gate) gate.classList.add("hidden");
-    if (protectedWrap) protectedWrap.classList.add("is-visible");
+
+    if (protectedWrap) {
+      protectedWrap.classList.remove("hidden");   // ✅ haal hidden weg
+      protectedWrap.classList.add("is-visible");  // ✅ toon content
+    }
 
     // store token
     if (inviteToken) inviteToken.value = token;
@@ -261,17 +265,12 @@ window.addEventListener("DOMContentLoaded", () => {
   setupImageFallback(locationImg, locationFallback);
   setupImageFallback(usImg, usFallback);
 
-  // Init: always start locked
-  if (protectedWrap) protectedWrapList.remove("hidden");if (protectedWrap) protectedWrap.classList.remove("is-visible");
+  // Init: always start locked (gate visible, protected hidden)
+  if (gate) gate.classList.remove("hidden");
   
-  if (copyAddressBtn) {
-    copyAddressBtn.addEventListener("click", async () => {
-      const ok = await copyToClipboard(CONFIG.locationText);
-      if (copyMsg) copyMsg.textContent = ok ? "Adres gekopieerd ✅" : "Kopiëren niet gelukt. Kopieer handmatig.";
-      setTimeout(() => {
-        if (copyMsg) copyMsg.textContent = "";
-      }, 2200);
-    });
+  if (protectedWrap) {
+    protectedWrap.classList.add("hidden");
+    protectedWrap.classList.remove("is-visible");
   }
 
   // auto-open via URL token
