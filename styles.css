@@ -432,3 +432,10 @@ textarea.input{ resize: vertical; min-height: 90px; }
 #protected.is-visible {
   display: block !important;
 }
+
+.hidden { .hidden}
+
+#protected.is-visible {
+  display: block !important;
+}
+  display: none !important; 
