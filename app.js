@@ -261,6 +261,9 @@ window.addEventListener("DOMContentLoaded", () => {
   setupImageFallback(locationImg, locationFallback);
   setupImageFallback(usImg, usFallback);
 
+  // Init: always start locked
+  if (protectedWrap) protectedWrapList.remove("hidden");if (protectedWrap) protectedWrap.classList.remove("is-visible");
+  
   if (copyAddressBtn) {
     copyAddressBtn.addEventListener("click", async () => {
       const ok = await copyToClipboard(CONFIG.locationText);
