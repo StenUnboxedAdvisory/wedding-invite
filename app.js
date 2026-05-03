@@ -266,6 +266,14 @@ window.addEventListener("DOMContentLoaded", () => {
   setupImageFallback(locationImg, locationFallback);
   setupImageFallback(usImg, usFallback);
 
+  if (copyAddressBtn) {
+    copyAddressBtn.addEventListener("click", async () => {
+      const ok = await copyToClipboard(CONFIG.copyAddressText);
+      if (copyMsg) copyMsg.textContent = ok ? "Adres gekopieerd ✅" : "Kopiëren niet gelukt. Kopieer handmatig.";
+      setTimeout(() => { if (copyMsg) copyMsg.textContent = ""; }, 2200);
+    });
+  }
+  
   // Init: always start locked (gate visible, protected hidden)
   if (gate) gate.classList.remove("hidden");
   
