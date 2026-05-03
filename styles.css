@@ -422,3 +422,13 @@ textarea.input{ resize: vertical; min-height: 90px; }
   display: none;
 }
 #protected.is-visible {
+
+/* Fail-safe: hidden moet ALTIJD verbergen */
+.hidden { 
+  display: none !important; 
+}
+
+/* Optional: visible state for #protected */
+#protected.is-visible {
+  display: block !important;
+}
