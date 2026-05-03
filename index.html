@@ -82,20 +82,22 @@
             <p class="muted">Landgoed Rhederoord, De Steeg</p>
           </div>
 
-          <div class="mediaCard">
-           <div class="mediaCard__imgWrap">
-              <img
-                id="location"    id="locationImg"
-                src="assets/location.jpg"
-                alt="Locatie"
-                loading="lazy"
-                onerror="this.style.display='none'; document.getElementById('locationFallback').style.display='flex';"
-                onload="document.getElementById('locationFallback').style.display='none';"
-              />
-              <div id="locationFallback" class="mediaCard__imgFallback" style="display:none;">
-                (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
-              </div>
+         <div class="mediaCard">
+          <div class="mediaCard__imgWrap">
+            <img
+              id="locationImg"
+              class="mediaCard__img"
+              src="assets/location.jpg"
+              alt="Locatie"
+              loading="lazy"
+              onerror="this.style.display='none'; document.getElementById('locationFallback').style.display='flex';"
+              onload="document.getElementById('locationFallback').style.display='none'; this.style.display='block';"
+            />
+            <div id="locationFallback" class="mediaCard__imgFallback" style="display:none;">
+              (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
             </div>
+          </div>
+        </div>
 
             <div class="mediaCard__body">
               <p class="big" id="locationText">Landgoed Rhederoord, De Steeg</p>
