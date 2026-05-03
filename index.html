@@ -83,9 +83,16 @@
           </div>
 
           <div class="mediaCard">
-            <div class="mediaCard__imgWrap">
-              assets/location.jpg
-              <div id="locationFallback" class="mediaCard__imgFallback">
+           <div class="mediaCard__imgWrap">
+              <img
+                id="location"    id="locationImg"
+                src="assets/location.jpg"
+                alt="Locatie"
+                loading="lazy"
+                onerror="this.style.display='none'; document.getElementById('locationFallback').style.display='flex';"
+                onload="document.getElementById('locationFallback').style.display='none';"
+              />
+              <div id="locationFallback" class="mediaCard__imgFallback" style="display:none;">
                 (Voeg optioneel een foto toe: <code>assets/location.jpg</code>)
               </div>
             </div>
@@ -274,8 +281,16 @@
       <section class="block block--soft block--end">
         <div class="card endCard">
           <div class="endCard__imgWrap">
-            assets/us.jpg
-            <div id="usFallback" class="endCard__imgFallback">
+            <img
+              id="usImg"
+              class="endCard__img"
+              src="assets/us.jpg"
+              alt="Sten &amp; Chrissy"
+              loading="lazy"
+              onerror="this.style.display='none'; document.getElementById('usFallback').style.display='flex';"
+              onload="document.getElementById('usFallback').style.display='none';"
+            />
+            <div id="usFallback" class="endCard__imgFallback" style="display:none;">
               (Voeg een foto toe: <code>assets/us.jpg</code>)
             </div>
           </div>
