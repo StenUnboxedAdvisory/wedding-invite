@@ -12,6 +12,8 @@ window.addEventListener("DOMContentLoaded", () => {
     rsvpDeadlineText: "31 december 2026",
     copyAddressText: "Parkweg 19, 6994 CM De Steeg",
 
+    const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3
+    
     // tijden die je wil tonen in pill
     dayStart: "13:00",
     eveningStart: "20:00",
@@ -323,9 +325,64 @@ window.addEventListener("DOMContentLoaded", () => {
         submittedAt: new Date().toISOString()
       };
 
-      console.log("RSVP payload:", payload);
+      // RSVP submit (Google Sheets via Apps Script)
+if (rsvpForm) {
+  rsvpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (rsvpMsg) rsvpMsg.textContent = "Bezig met versturen…";
 
-      await new Promise((r) => setTimeout(r, 450));
+    const token = inviteToken?.value || "";
+    const invite = window.INVITES?.[token];
+
+    if (!invite) {
+      if (rsvpMsg) rsvpMsg.textContent = "Er ging iets mis: uitnodiging niet gevonden.";
+      return;
+    }
+
+    const payload = {
+      token,
+      label: invite.label || "",
+      type: invite.type,
+      attending: attending?.value || "",
+      people: attending?.value === "yes" ? Number(people?.value || 1) : 0,
+      overnight: invite.type === "day" ? (overnight?.value || "") : "",
+      notes: notes?.value || "",
+      submittedAt: new Date().toISOString()
+    };
+
+      try {
+        // Gebruik text/plain om CORS preflight issues te vermijden [3](https://developers.google.com/apps-script/reference/content/content-service)[4](https://docs.philips.com/personal/sten_van_boxtel_philips_com/Documents/Microsoft%20Copilot%20Chat%20Files/styles.css)
+        const res = await fetch(
+          RSVP_ENDPOINT + "?src=invite&ua=" + encodeURIComponent(navigator.userAgent),
+          {
+            method: "POST",
+            redirect: "follow", // Apps Script kan redirecten; follow helpt [3](https://developers.google.com/apps-script/reference/content/content-service)
+            headers: { "Content-Type": "text/plain;charset=utf-8" }, // minder CORS gedoe [3](https://developers.google.com/apps-script/reference/content/content-service)[4](https://docs.philips.com/personal/sten_van_boxtel_philips_com/Documents/Microsoft%20Copilot%20Chat%20Files/styles.css)
+            body: JSON.stringify(payload)
+          }
+        );
+  
+        const out = await res.json();
+  
+        if (!out.ok) {
+          if (rsvpMsg) rsvpMsg.textContent = "Oops — opslaan lukt niet. Probeer het later opnieuw.";
+          return;
+        }
+  
+        if (rsvpMsg) {
+          rsvpMsg.textContent = COPY_STATE.single
+            ? "Dankjewel! Je RSVP is opgeslagen ✅"
+            : "Dankjewel! Jullie RSVP is opgeslagen ✅";
+        }
+  
+        const btn = rsvpForm.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+  
+      } catch (err) {
+        if (rsvpMsg) rsvpMsg.textContent = "Oops — opslaan lukt niet. Probeer het later opnieuw.";
+      }
+    });
+  }
 
       if (rsvpMsg) {
         rsvpMsg.textContent = COPY_STATE.single
