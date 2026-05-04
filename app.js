@@ -24,7 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   // ===== Elements =====
-  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3
+  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3;
   const gate = document.getElementById("gate");
   const protectedWrap = document.getElementById("protected");
   const gateMsg = document.getElementById("gateMsg");
