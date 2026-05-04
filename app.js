@@ -1,8 +1,11 @@
 window.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Sten & Chrissy - Wedding Invite
-  // app.js (clean & working)
+  // app.js (clean)
   // =============================
+
+  const RSVP_ENDPOINT =
+    "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3R9oBMlXDSbF01qRWATZoIiFOhJBkzifU4OtP0aksBXIsb/exec";
 
   const CONFIG = {
     weddingDateISO: "2027-05-21T13:00:00+02:00",
@@ -12,7 +15,6 @@ window.addEventListener("DOMContentLoaded", () => {
     rsvpDeadlineText: "31 december 2026",
     copyAddressText: "Parkweg 19, 6994 CM De Steeg",
 
-    // tijden die je wil tonen in pill
     dayStart: "13:30",
     eveningStart: "20:30",
 
@@ -24,7 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   // ===== Elements =====
-  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3";
   const gate = document.getElementById("gate");
   const protectedWrap = document.getElementById("protected");
   const gateMsg = document.getElementById("gateMsg");
@@ -88,7 +89,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (gateMsg) gateMsg.textContent = "Er ging iets mis: invites.js is niet geladen.";
     return;
   }
-
   if (!codeForm || !codeInput) {
     console.error("codeForm/codeInput niet gevonden. Check IDs in index.html.");
     return;
@@ -125,12 +125,9 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function setDayOnlyVisibility(isDay) {
-    // alles met class dayOnly wordt verborgen voor avondgasten
     document.querySelectorAll(".dayOnly").forEach((el) => {
       el.classList.toggle("hidden", !isDay);
     });
-
-    // extra zekerheid
     if (menuSection) menuSection.classList.toggle("hidden", !isDay);
     if (afterpartyRow) afterpartyRow.classList.toggle("hidden", !isDay);
     if (overnightRow) overnightRow.classList.toggle("hidden", !isDay);
@@ -140,7 +137,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function startCountdown(targetISO) {
     const target = new Date(targetISO).getTime();
-
     const tick = () => {
       const now = Date.now();
       let diff = Math.max(0, target - now);
@@ -158,7 +154,6 @@ window.addEventListener("DOMContentLoaded", () => {
       if (mEl) mEl.textContent = String(mins).padStart(2, "0");
       if (sEl) sEl.textContent = String(secs).padStart(2, "0");
     };
-
     tick();
     setInterval(tick, 1000);
   }
@@ -186,50 +181,34 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function setupImageFallback(imgEl, fallbackEl) {
     if (!imgEl || !fallbackEl) return;
-
-    // default: hide fallback, show it only on error
     fallbackEl.classList.add("hidden");
-
     imgEl.addEventListener("load", () => fallbackEl.classList.add("hidden"));
     imgEl.addEventListener("error", () => fallbackEl.classList.remove("hidden"));
   }
 
   function showInvite(token, invite) {
-    // show protected content
     if (gate) gate.classList.add("hidden");
-    
-    if (protectedWrap) {
-      protectedWrap.classList.remove("hidden");
-      protectedWrap.classList.add("is-visible");
-    }
+    if (protectedWrap) protectedWrap.classList.remove("hidden");
 
-    // store token
     if (inviteToken) inviteToken.value = token;
 
-    // copy/pronouns
     const single = applyCopy(invite);
-
-    // day vs evening
     const isDay = invite.type === "day";
     COPY_STATE = { single, isDay };
     setDayOnlyVisibility(isDay);
 
-    // greet
     if (helloText) helloText.textContent = invite?.label ? `Hallo ${invite.label} 👋` : "";
 
-    // fill text
     if (dateText) dateText.textContent = CONFIG.dateText;
     if (locationText) locationText.textContent = CONFIG.locationText;
     if (dresscodeText) dresscodeText.textContent = CONFIG.dresscode;
 
-    // pills
     if (guestTypePill) guestTypePill.textContent = isDay ? "Daggast" : "Avondgast";
     if (startTimePill) startTimePill.textContent = `Starttijd: ${isDay ? CONFIG.dayStart : CONFIG.eveningStart}`;
 
-    // RSVP deadline
     if (rsvpDeadline) rsvpDeadline.textContent = CONFIG.rsvpDeadlineText;
+    if (overnightHint) overnightHint.textContent = CONFIG.overnightHint;
 
-    // max people
     if (people && invite.maxPeople) {
       people.max = String(invite.maxPeople);
       people.value = "1";
@@ -238,10 +217,6 @@ window.addEventListener("DOMContentLoaded", () => {
       peopleHint.textContent = `Maximaal ${invite.maxPeople} persoon/personen voor deze uitnodiging.`;
     }
 
-    // overnight hint
-    if (overnightHint) overnightHint.textContent = CONFIG.overnightHint;
-
-    // reset RSVP
     if (rsvpMsg) rsvpMsg.textContent = "";
     if (attending) attending.value = "";
     if (overnight) overnight.value = "";
@@ -274,23 +249,18 @@ window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => { if (copyMsg) copyMsg.textContent = ""; }, 2200);
     });
   }
-  
-  // Init: always start locked (gate visible, protected hidden)
-  if (gate) gate.classList.remove("hidden");
-  
-  if (protectedWrap) {
-    protectedWrap.classList.add("hidden");
-    protectedWrap.classList.remove("is-visible");
-  }
 
-  // auto-open via URL token
+  // Start locked
+  if (protectedWrap) protectedWrap.classList.add("hidden");
+
+  // Auto-open via URL token
   const urlToken = getTokenFromUrl();
   if (urlToken) {
     const ok = tryOpen(urlToken);
     if (!ok && gateMsg) gateMsg.textContent = "Deze link/token is niet geldig. Controleer de link of voer je code in.";
   }
 
-  // open via code form
+  // Open via code form
   codeForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const ok = tryOpen(codeInput.value);
@@ -299,7 +269,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (attending) attending.addEventListener("change", setPeopleVisibility);
 
-  // RSVP submit (placeholder: console.log)
+  // RSVP submit -> Google Sheets via Apps Script
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -324,73 +294,36 @@ window.addEventListener("DOMContentLoaded", () => {
         submittedAt: new Date().toISOString()
       };
 
-      // RSVP submit (Google Sheets via Apps Script)
-if (rsvpForm) {
-  rsvpForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (rsvpMsg) rsvpMsg.textContent = "Bezig met versturen…";
-
-    const token = inviteToken?.value || "";
-    const invite = window.INVITES?.[token];
-
-    if (!invite) {
-      if (rsvpMsg) rsvpMsg.textContent = "Er ging iets mis: uitnodiging niet gevonden.";
-      return;
-    }
-
-    const payload = {
-      token,
-      label: invite.label || "",
-      type: invite.type,
-      attending: attending?.value || "",
-      people: attending?.value === "yes" ? Number(people?.value || 1) : 0,
-      overnight: invite.type === "day" ? (overnight?.value || "") : "",
-      notes: notes?.value || "",
-      submittedAt: new Date().toISOString()
-    };
-
       try {
-        // Gebruik text/plain om CORS preflight issues te vermijden [3](https://developers.google.com/apps-script/reference/content/content-service)[4](https://docs.philips.com/personal/sten_van_boxtel_philips_com/Documents/Microsoft%20Copilot%20Chat%20Files/styles.css)
         const res = await fetch(
           RSVP_ENDPOINT + "?src=invite&ua=" + encodeURIComponent(navigator.userAgent),
           {
             method: "POST",
-            redirect: "follow", // Apps Script kan redirecten; follow helpt [3](https://developers.google.com/apps-script/reference/content/content-service)
-            headers: { "Content-Type": "text/plain;charset=utf-8" }, // minder CORS gedoe [3](https://developers.google.com/apps-script/reference/content/content-service)[4](https://docs.philips.com/personal/sten_van_boxtel_philips_com/Documents/Microsoft%20Copilot%20Chat%20Files/styles.css)
+            redirect: "follow",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload)
           }
         );
-  
+
         const out = await res.json();
-  
+
         if (!out.ok) {
           if (rsvpMsg) rsvpMsg.textContent = "Oops — opslaan lukt niet. Probeer het later opnieuw.";
           return;
         }
-  
+
         if (rsvpMsg) {
           rsvpMsg.textContent = COPY_STATE.single
             ? "Dankjewel! Je RSVP is opgeslagen ✅"
             : "Dankjewel! Jullie RSVP is opgeslagen ✅";
         }
-  
+
         const btn = rsvpForm.querySelector('button[type="submit"]');
         if (btn) btn.disabled = true;
-  
+
       } catch (err) {
         if (rsvpMsg) rsvpMsg.textContent = "Oops — opslaan lukt niet. Probeer het later opnieuw.";
       }
-    });
-  }
-
-      if (rsvpMsg) {
-        rsvpMsg.textContent = COPY_STATE.single
-          ? "Dankjewel! We kijken ernaar uit om je te zien 💛"
-          : "Dankjewel! We kijken ernaar uit om jullie te zien 💛";
-      }
-
-      const btn = rsvpForm.querySelector('button[type="submit"]');
-      if (btn) btn.disabled = true;
     });
   }
 });
