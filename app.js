@@ -12,20 +12,19 @@ window.addEventListener("DOMContentLoaded", () => {
     rsvpDeadlineText: "31 december 2026",
     copyAddressText: "Parkweg 19, 6994 CM De Steeg",
 
-    const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3
-    
     // tijden die je wil tonen in pill
-    dayStart: "13:00",
-    eveningStart: "20:00",
+    dayStart: "13:30",
+    eveningStart: "20:30",
 
     dresscode:
       "Feestelijk, zomers & comfortabel ✨ Denk aan summer chic of cocktail chic. Draag vooral iets waar je je mooi in voelt.",
 
     overnightHint:
-      "Overnachting is optioneel (1 nacht) tegen €50 p.p. — ontbijt 10:30 • afsluiting 12:00."
+      "Overnachting is optioneel (1 nacht) tegen €50 p.p. — inclusief ontbijt van 9:00 tot 10:30 • check-out om 10:30."
   };
 
   // ===== Elements =====
+  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz9BglxU3baverTDpz3Ty3
   const gate = document.getElementById("gate");
   const protectedWrap = document.getElementById("protected");
   const gateMsg = document.getElementById("gateMsg");
