@@ -175,8 +175,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function setPeopleVisibility() {
     const isYes = attending?.value === "yes";
+  
+    // People: alleen tonen als attending = yes
     if (peopleWrap) peopleWrap.style.display = isYes ? "block" : "none";
     if (!isYes && people) people.value = "1";
+  
+    // Overnight: alleen zinvol als attending = yes én daggast
+    // COPY_STATE.isDay wordt gezet in showInvite() op basis van invite.type [1](https://docs.philips.com/personal/sten_van_boxtel_philips_com/Documents/Microsoft%20Copilot%20Chat%20Files/app.js)
+    const showOvernight = isYes && COPY_STATE.isDay;
+  
+    if (overnightWrap) overnightWrap.style.display = showOvernight ? "block" : "none";
+  
+    // Als attending = no (of nog leeg), reset overnight keuze zodat je nooit "nee + overnachting ja" krijgt
+    if (!showOvernight && overnight) overnight.value = "";
   }
 
   function setupImageFallback(imgEl, fallbackEl) {
@@ -289,7 +300,7 @@ window.addEventListener("DOMContentLoaded", () => {
         type: invite.type,
         attending: attending?.value || "",
         people: attending?.value === "yes" ? Number(people?.value || 1) : 0,
-        overnight: invite.type === "day" ? (overnight?.value || "") : "",
+        overnight: (invite.type === "day" && attending?.value === "yes") ? (overnight?.value || "") : "",
         notes: notes?.value || "",
         submittedAt: new Date().toISOString()
       };
