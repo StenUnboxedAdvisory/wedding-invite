@@ -314,8 +314,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if (rsvpMsg) {
           rsvpMsg.textContent = COPY_STATE.single
-            ? "Dankjewel! Je RSVP is opgeslagen ✅"
-            : "Dankjewel! Jullie RSVP is opgeslagen ✅";
+            ? "Dankjewel! Je RSVP is opgeslagen ✅. Mocht er iets veranderen, log dan even opnieuw in en voer de nieuwe gegevens in voor 31 december."
+            : "Dankjewel! Jullie RSVP is opgeslagen ✅. Mocht er iets veranderen, log dan even opnieuw in en voer de nieuwe gegevens in voor 31 december.";
         }
 
         const btn = rsvpForm.querySelector('button[type="submit"]');
