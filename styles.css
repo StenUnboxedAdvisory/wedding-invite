@@ -658,15 +658,15 @@ html, body {
   }
 }
 
-/* Mobile timeline spacing: fixed-width times and more room between icon/time */
+/* Mobile timeline spacing */
 @media (max-width: 680px) {
   .timelineItem {
-    grid-template-columns: 52px 82px minmax(0, 1fr);
-    column-gap: 14px;
+    grid-template-columns: 52px 94px minmax(0, 1fr);
+    column-gap: 18px;
   }
 
   .timelineItem time {
-    width: 82px;
+    width: 94px;
     padding-right: 0;
     text-align: right;
     white-space: nowrap;
@@ -677,11 +677,11 @@ html, body {
 
 @media (max-width: 390px) {
   .timelineItem {
-    grid-template-columns: 50px 78px minmax(0, 1fr);
-    column-gap: 12px;
+    grid-template-columns: 50px 100px minmax(0, 1fr);
+    column-gap: 20px;
   }
 
   .timelineItem time {
-    width: 78px;
+    width: 100px;
   }
 }
