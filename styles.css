@@ -678,7 +678,7 @@ html, body {
 @media (max-width: 390px) {
   .timelineItem {
     grid-template-columns: 50px 90px minmax(0, 1fr);
-    column-gap: 18px;
+    column-gap: 16px;
   }
 
   .timelineItem time {
