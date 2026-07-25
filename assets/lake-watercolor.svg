@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 520" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="mountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9aea3" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#d8d4ca" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="mountain2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9b7ae" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#e7e1d6" stop-opacity=".03"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#aebbb8" stop-opacity=".11"/>
+      <stop offset=".6" stop-color="#d9ddd7" stop-opacity=".055"/>
+      <stop offset="1" stop-color="#f5efe5" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="wash" x="-10%" y="-20%" width="120%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency=".012 .028" numOctaves="3" seed="8" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7"/>
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#wash)">
+    <path d="M0 235C92 198 160 163 236 148C311 133 351 162 415 174C488 188 541 132 615 116C695 98 754 133 814 169C843 186 871 198 900 199L900 326L0 326Z" fill="url(#mountain2)"/>
+    <path d="M0 279C121 240 193 215 282 216C375 217 440 247 525 244C625 241 711 192 800 194C845 195 875 203 900 212L900 333L0 333Z" fill="url(#mountain)"/>
+    <path d="M1800 235C1708 198 1640 163 1564 148C1489 133 1449 162 1385 174C1312 188 1259 132 1185 116C1105 98 1046 133 986 169C957 186 929 198 900 199L900 326L1800 326Z" fill="url(#mountain2)"/>
+    <path d="M1800 279C1679 240 1607 215 1518 216C1425 217 1360 247 1275 244C1175 241 1089 192 1000 194C955 195 925 203 900 212L900 333L1800 333Z" fill="url(#mountain)"/>
+    <path d="M0 304C288 295 554 301 900 304C1246 301 1512 295 1800 304V520H0Z" fill="url(#water)"/>
+    <path d="M0 322C270 316 545 329 900 322C1255 329 1530 316 1800 322" fill="none" stroke="#9aa9a5" stroke-opacity=".10" stroke-width="2.2"/>
+    <path d="M0 350C300 342 578 356 900 350C1222 356 1500 342 1800 350" fill="none" stroke="#b4b9b2" stroke-opacity=".08" stroke-width="1.8"/>
+  </g>
+  <g opacity=".24" stroke="#85897d" stroke-linecap="round">
+    <path d="M435 283v41" stroke-width="1.4"/>
+    <path d="M435 286l-18 28h36z" fill="#aaa697" stroke="none"/>
+    <path d="M419 326h32" stroke-width="1.4"/>
+  </g>
+</svg>
