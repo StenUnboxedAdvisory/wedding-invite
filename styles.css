@@ -657,3 +657,31 @@ html, body {
     top: -4px;
   }
 }
+
+/* Mobile timeline spacing: fixed-width times and more room between icon/time */
+@media (max-width: 680px) {
+  .timelineItem {
+    grid-template-columns: 52px 82px minmax(0, 1fr);
+    column-gap: 14px;
+  }
+
+  .timelineItem time {
+    width: 82px;
+    padding-right: 0;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+}
+
+@media (max-width: 390px) {
+  .timelineItem {
+    grid-template-columns: 50px 78px minmax(0, 1fr);
+    column-gap: 12px;
+  }
+
+  .timelineItem time {
+    width: 78px;
+  }
+}
