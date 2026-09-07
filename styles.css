@@ -685,3 +685,9 @@ html, body {
     width: 90px;
   }
 }
+
+@media(max-width:900px){
+  .contacts-section{
+    grid-template-columns:1fr !important;
+  }
+}
