@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
     eveningStart: "20:30",
 
     dresscode:
-      "Feestelijk, zomers & comfortabel ✨ Denk aan summer chic of cocktail chic. Draag vooral iets waar je je mooi in voelt.",
+      "Feestelijk, zomers & comfortabel ✨ Denk aan summer chic of cocktail chic. Draag vooral iets waar je je mooi in voelt. ",
 
     overnightHint:
       "Bij een overnachting nemen we later contact op over de kamerindeling en betaling (€50 p.p.). Ontbijt is van 09:00 tot 10:15 en uitchecken om 10:30."
