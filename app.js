@@ -75,6 +75,11 @@ window.addEventListener("DOMContentLoaded", () => {
   const dayTimesNote = document.getElementById("dayTimesNote");
   const practicalGrid = document.getElementById("practicalGrid");
 
+  const contactsSection = document.getElementById("contacts");
+  const ceremonyContacts = document.getElementById("ceremonyContacts");
+  const contactsDivider = document.getElementById("contactsDivider");
+  const speechContacts = document.getElementById("speechContacts");
+  
   const rsvpDeadline = document.getElementById("rsvpDeadline");
   const rsvpIntro = document.getElementById("rsvpIntro");
   const optYes = document.getElementById("optYes");
@@ -168,6 +173,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".dayOnly").forEach((el) => {
       el.classList.toggle("hidden", !isDay);
     });
+  
     if (planningSection) planningSection.classList.toggle("hidden", !isDay);
     if (menuSection) menuSection.classList.toggle("hidden", !isDay);
     if (planningNav) planningNav.classList.toggle("hidden", !isDay);
@@ -177,6 +183,17 @@ window.addEventListener("DOMContentLoaded", () => {
     if (overnightWrap) overnightWrap.classList.toggle("hidden", !isDay);
     if (dayTimesNote) dayTimesNote.classList.toggle("hidden", !isDay);
     if (practicalGrid) practicalGrid.classList.toggle("single-card", !isDay);
+  
+    // Contactsectie: speeches alleen voor daggasten.
+    if (speechContacts) speechContacts.classList.toggle("hidden", !isDay);
+    if (contactsDivider) contactsDivider.classList.toggle("hidden", !isDay);
+  
+    // Avondgasten: ceremoniemeesters als enige blok in het midden.
+    if (contactsSection) {
+      contactsSection.style.gridTemplateColumns = isDay
+        ? "1fr auto 1fr"
+        : "minmax(0, 680px)";
+    }
   }
 
   function startCountdown(targetISO) {
