@@ -94,7 +94,7 @@ window.INVITES = {
   "83393386": { type: "evening", maxPeople: 1, label: "Bram" },
   "19267035": { type: "evening", maxPeople: 1, label: "Benjamin" },
   "72976966": { type: "evening", maxPeople: 1, label: "Joost" },
-  "29983416": { type: "evening", maxPeople: 1, label: "Jan-noud" },
+  "29983416": { type: "evening", maxPeople: 1, label: "Jan-Noud" },
   "43597186": { type: "evening", maxPeople: 1, label: "Joppe" },
   "68059207": { type: "evening", maxPeople: 1, label: "Bianca" },
   "26917652": { type: "evening", maxPeople: 2, label: "Bart & Jantine" },
