@@ -190,9 +190,13 @@ window.addEventListener("DOMContentLoaded", () => {
   
     // Avondgasten: ceremoniemeesters als enige blok in het midden.
     if (contactsSection) {
-      contactsSection.style.gridTemplateColumns = isDay
-        ? "1fr auto 1fr"
-        : "minmax(0, 680px)";
+      if (isDay) {
+        contactsSection.style.gridTemplateColumns = "1fr auto 1fr";
+        contactsSection.style.justifyContent = "";
+      } else {
+        contactsSection.style.gridTemplateColumns = "minmax(0, 680px)";
+        contactsSection.style.justifyContent = "center";
+      }
     }
   }
 
