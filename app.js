@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     rsvpDeadlineText: "31 december 2026",
     copyAddressText: "Parkweg 19, 6994 CM De Steeg",
 
-    dayStart: "14:00",
+    dayStart: "13:30",
     eveningStart: "20:30",
 
     dresscode:
