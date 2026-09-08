@@ -83,7 +83,7 @@ window.INVITES = {
   "57182805": { type: "evening", maxPeople: 1, label: "Mats" },
   "84329212": { type: "evening", maxPeople: 2, label: "Hermine & Henk" },
   "83933102": { type: "evening", maxPeople: 2, label: "Carlijn & Robin" },
-  "38592491": { type: "evening", maxPeople: 1, label: "Liselotte" },
+  "38592491": { type: "evening", maxPeople: 2, label: "Liselotte & Leon" },
   "57513580": { type: "evening", maxPeople: 2, label: "Caroline & Gerard" },
   "60790394": { type: "evening", maxPeople: 1, label: "Maria" },
   "56666433": { type: "evening", maxPeople: 1, label: "Marc" },
