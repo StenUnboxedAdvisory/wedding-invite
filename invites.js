@@ -12,7 +12,7 @@ window.INVITES = {
   "71025215": { type: "day", maxPeople: 1, label: "Malou" },
   "69194526": { type: "day", maxPeople: 1, label: "Kelly" },
   "44124241": { type: "day", maxPeople: 1, label: "Emily" },
-  "62295168": { type: "day", maxPeople: 1, label: "Daphne" },
+  "Daphne": { type: "day", maxPeople: 1, label: "Daphne" },
   "21870319": { type: "day", maxPeople: 2, label: "Laura & Bart" },
   "68496010": { type: "day", maxPeople: 2, label: "Renee & Annelies" },
   "64247577": { type: "day", maxPeople: 2, label: "Kim & Marijn" },
